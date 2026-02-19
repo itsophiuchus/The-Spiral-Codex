@@ -1,0 +1,1376 @@
+!DOCTYPE html
+html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Emanatory Schema - Complete Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..600;1,300;1,400&family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@300;400&display=swap');
+
+:root {
+  --parchment: #f0ece2;
+  --gold: #c9a84c;
+  --gold-dim: rgba(201,168,76,0.13);
+  --ash: #7a7168;
+  --deep: #0e0b08;
+  --panel: #111009;
+  --panel2: #0d0a07;
+  --border: rgba(201,168,76,0.13);
+  --probe: #7a9abf;
+  --warm: #b07a4c;
+  --valid: #4caf82;
+  --tension: #bf5a3a;
+  --mono-bg: #0a0806;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--deep);
+  color: #cec7ba;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.9;
+  overflow-x: hidden;
+}
+
+.bg-glow {
+position: fixed; top: 0; left: 50%;
+transform: translateX(-50%);
+width: 900px; height: 420px;
+background: radial-gradient(ellipse, rgba(201,168,76,0.03) 0%, transparent 65%);
+pointer-events: none; z-index: 0;
+}
+
+/* ── NAV ── */
+.site-nav {
+position: fixed; top: 0; left: 0; right: 0;
+z-index: 100;
+background: rgba(14,11,8,0.95);
+backdrop-filter: blur(8px);
+border-bottom: 1px solid var(–-border);
+padding: 0 2rem;
+display: flex; align-items: center;
+justify-content: space-between;
+height: 52px;
+}
+
+.nav-title {
+font-family: ‘Cinzel’, serif;
+font-size: 0.68rem; letter-spacing: 0.22em;
+color: var(–-gold); text-transform: uppercase;
+white-space: nowrap;
+}
+
+.nav-links {
+display: flex; gap: 0; overflow-x: auto;
+scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+
+.nav-link {
+font-family: ‘Cinzel’, serif;
+font-size: 0.6rem; letter-spacing: 0.15em;
+color: rgba(201,168,76,0.45); text-transform: uppercase;
+text-decoration: none; padding: 0 14px;
+border-right: 1px solid rgba(201,168,76,0.08);
+white-space: nowrap; line-height: 52px;
+transition: color 0.2s;
+}
+.nav-link:first-child { border-left: 1px solid rgba(201,168,76,0.08); }
+.nav-link:hover { color: var(–-gold); }
+.nav-link.active { color: var(–-gold); }
+
+/* ── LAYOUT ── */
+.container {
+max-width: 820px;
+margin: 0 auto;
+padding: 0 2rem;
+position: relative; z-index: 1;
+}
+
+/* ── TITLE PAGE ── */
+.title-page {
+min-height: 100vh;
+display: flex; flex-direction: column;
+align-items: center; justify-content: center;
+text-align: center;
+padding: 80px 2rem 60px;
+}
+
+.title-line-top {
+width: 1px; height: 80px;
+background: linear-gradient(to bottom, transparent, var(–-gold));
+margin: 0 auto 52px;
+}
+
+.title-eyebrow {
+font-family: ‘Cinzel’, serif;
+font-size: 10px; letter-spacing: 0.42em;
+color: var(–-gold); text-transform: uppercase;
+margin-bottom: 24px;
+}
+
+.title-main {
+font-family: ‘Cinzel’, serif;
+font-size: clamp(2rem, 6vw, 3.8rem);
+font-weight: 600; letter-spacing: 0.04em;
+color: var(–-parchment); line-height: 1.2;
+margin-bottom: 24px;
+}
+
+.title-sub {
+font-family: ‘IM Fell English’, serif;
+font-style: italic; font-size: 1.15rem;
+color: var(–-ash); margin-bottom: 48px;
+line-height: 1.7; max-width: 480px;
+}
+
+.title-ops {
+display: flex; justify-content: center;
+gap: 12px; flex-wrap: wrap; margin-bottom: 48px;
+}
+
+.title-op {
+font-family: ‘Cinzel’, serif;
+font-size: 0.72rem; letter-spacing: 0.2em;
+color: rgba(201,168,76,0.5); text-transform: uppercase;
+padding: 6px 16px;
+border: 1px solid rgba(201,168,76,0.12);
+}
+
+.title-rule {
+width: 120px; height: 1px;
+background: linear-gradient(to right, transparent, var(–-gold), transparent);
+margin: 0 auto 40px;
+}
+
+.title-nav-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1px; background: rgba(201,168,76,0.1);
+border: 1px solid rgba(201,168,76,0.1);
+max-width: 600px; width: 100%; margin: 0 auto;
+}
+
+.title-nav-item {
+background: rgba(14,11,8,0.97);
+padding: 16px 18px;
+text-decoration: none;
+text-align: left;
+transition: background 0.2s;
+}
+.title-nav-item:hover { background: rgba(201,168,76,0.05); }
+
+.tni-num {
+font-family: ‘Cinzel’, serif;
+font-size: 0.6rem; letter-spacing: 0.2em;
+color: rgba(201,168,76,0.4); text-transform: uppercase;
+display: block; margin-bottom: 4px;
+}
+
+.tni-title {
+font-family: ‘Cinzel’, serif;
+font-size: 0.72rem; letter-spacing: 0.08em;
+color: #c0b090; display: block; line-height: 1.3;
+}
+
+/* ── CHAPTER/SECTION PAGES ── */
+.chapter {
+padding-top: 80px;
+border-top: 1px solid rgba(201,168,76,0.08);
+margin-top: 80px;
+}
+
+.chapter-banner {
+padding: 72px 0 56px;
+text-align: center;
+border-bottom: 1px solid var(–-border);
+margin-bottom: 56px;
+}
+
+.chap-eyebrow {
+font-family: ‘Cinzel’, serif;
+font-size: 9px; letter-spacing: 0.4em;
+color: rgba(201,168,76,0.4); text-transform: uppercase;
+margin-bottom: 16px;
+}
+
+.chap-title {
+font-family: ‘Cinzel’, serif;
+font-size: clamp(1.4rem, 3.5vw, 2.3rem);
+font-weight: 600; letter-spacing: 0.03em;
+color: var(–-parchment); line-height: 1.25;
+margin-bottom: 14px;
+}
+
+.chap-sub {
+font-family: ‘IM Fell English’, serif;
+font-style: italic; font-size: 0.96rem;
+color: var(–-ash); line-height: 1.6;
+}
+
+.chap-rule {
+width: 60px; height: 1px;
+background: linear-gradient(to right, transparent, var(–-gold), transparent);
+margin: 20px auto 0;
+}
+
+/* ── SECTION HEADS ── */
+.book-section { margin: 60px 0; }
+
+.section-head {
+display: flex; align-items: baseline;
+gap: 16px; margin-bottom: 26px;
+padding-bottom: 13px;
+border-bottom: 1px solid var(–-border);
+}
+
+.sec-roman {
+font-family: ‘Cinzel’, serif;
+font-size: 0.66rem; letter-spacing: 0.3em;
+color: rgba(201,168,76,0.4); text-transform: uppercase;
+flex-shrink: 0;
+}
+
+h2 {
+font-family: ‘Cinzel’, serif;
+font-size: 1rem; font-weight: 600;
+letter-spacing: 0.05em; color: var(–-parchment);
+}
+
+/* ── REUSED COMPONENTS (shared across all chapters) ── */
+
+p { margin-bottom: 1.35em; }
+p:last-child { margin-bottom: 0; }
+em { font-style: italic; color: #ddd5c5; }
+strong { font-weight: 600; color: var(–-parchment); }
+
+.sym {
+font-family: ‘Cinzel’, serif;
+color: var(–-gold); font-size: 0.9em; letter-spacing: 0.04em;
+}
+
+.mono {
+font-family: ‘JetBrains Mono’, monospace;
+font-size: 0.78em; color: #d4b870;
+background: rgba(201,168,76,0.07); padding: 1px 5px;
+}
+
+.ornament {
+text-align: center; margin: 44px 0;
+color: var(–-gold); opacity: 0.2;
+font-size: 0.9rem; letter-spacing: 0.6em;
+}
+
+.section-div {
+width: 100%; height: 1px;
+background: linear-gradient(to right, transparent, rgba(201,168,76,0.14), transparent);
+margin: 56px 0;
+}
+
+/* ── ESSAY COMPONENTS ── */
+.essay-blockquote {
+margin: 40px 0; padding: 28px 36px;
+border-left: 2px solid var(–-gold);
+background: rgba(201,168,76,0.03);
+position: relative;
+}
+.essay-blockquote::before {
+content: ‘”’; font-size: 4.5rem; color: var(–-gold);
+opacity: 0.18; position: absolute;
+top: -6px; left: 10px; line-height: 1;
+font-family: ‘Cormorant Garamond’, serif;
+}
+.essay-blockquote p {
+font-family: ‘IM Fell English’, serif;
+font-style: italic; font-size: 1.12rem;
+color: var(–-parchment); margin: 0; line-height: 1.75;
+}
+
+.operator-grid { margin: 36px 0; display: grid; gap: 2px; background: rgba(201,168,76,0.1); border: 1px solid var(–-border); }
+.operator-row { display: grid; grid-template-columns: 80px 1fr 1fr; gap: 2px; background: var(–-deep); }
+.operator-row.header { background: rgba(201,168,76,0.08); }
+.op-cell { padding: 13px 17px; font-size: 0.88rem; background: rgba(15,12,9,0.95); }
+.operator-row.header .op-cell { font-family: ‘Cinzel’, serif; font-size: 0.72rem; letter-spacing: 0.2em; color: var(–-gold); text-transform: uppercase; background: transparent; }
+.op-symbol { font-family: ‘Cinzel’, serif; color: var(–-gold); font-size: 0.95rem; font-weight: 600; }
+.op-name { color: #b0a898; font-style: italic; }
+.op-role { color: #d0c9bc; font-size: 0.86rem; }
+
+.sequence { text-align: center; margin: 44px 0; padding: 32px; border: 1px solid rgba(201,168,76,0.12); background: rgba(201,168,76,0.02); position: relative; }
+.sequence::before, .sequence::after { content: ‘✦’; position: absolute; color: var(–-gold); opacity: 0.35; font-size: 0.65rem; }
+.sequence::before { top: 10px; left: 13px; }
+.sequence::after { bottom: 10px; right: 13px; }
+.sequence-formula { font-family: ‘Cinzel’, serif; font-size: 1.3rem; letter-spacing: 0.15em; color: var(–-parchment); }
+.sequence-formula .arrow { color: var(–-gold); margin: 0 5px; opacity: 0.7; }
+.sequence-labels { display: flex; justify-content: center; gap: 0; margin-top: 18px; flex-wrap: wrap; }
+.seq-item { text-align: center; min-width: 72px; padding: 0 10px; }
+.seq-item .s-sym { font-family: ‘Cinzel’, serif; color: var(–-gold); font-size: 0.88rem; display: block; }
+.seq-item .s-label { font-size: 0.7rem; color: var(–-ash); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-top: 4px; }
+
+.axiom-panel { margin: 52px 0; padding: 44px; text-align: center; background: rgba(139,58,26,0.07); border: 1px solid rgba(139,58,26,0.28); position: relative; overflow: hidden; }
+.axiom-panel::before { content: ‘’; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(201,168,76,0.04) 0%, transparent 70%); }
+.axiom-panel-label { font-family: ‘Cinzel’, serif; font-size: 0.68rem; letter-spacing: 0.38em; color: var(–-gold); text-transform: uppercase; display: block; margin-bottom: 22px; position: relative; }
+.axiom-panel p { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 1.22rem; line-height: 1.8; color: var(–-parchment); position: relative; margin: 0; }
+
+.domain-list { margin: 28px 0; display: grid; gap: 14px; }
+.domain-item { display: grid; grid-template-columns: 110px 1fr; gap: 14px; align-items: start; padding: 18px 22px; border: 1px solid rgba(201,168,76,0.1); background: rgba(201,168,76,0.02); }
+.domain-name { font-family: ‘Cinzel’, serif; font-size: 0.82rem; letter-spacing: 0.1em; color: var(–-gold); text-transform: uppercase; padding-top: 2px; }
+.domain-desc { font-size: 0.92rem; color: #b0a898; line-height: 1.6; }
+
+/* ── ANALYSIS COMPONENTS ── */
+.verdict { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 2px; font-family: ‘Cinzel’, serif; font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; margin-left: 4px; vertical-align: middle; position: relative; top: -1px; }
+.verdict::before { content: ‘’; width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.v-valid { background: rgba(76,175,130,0.1); border: 1px solid rgba(76,175,130,0.28); color: var(–-valid); }
+.v-valid::before { background: var(–-valid); }
+.v-caution { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.28); color: var(–-caution, var(–-gold)); }
+.v-caution::before { background: var(–-gold); }
+.v-reject { background: rgba(191,90,58,0.1); border: 1px solid rgba(191,90,58,0.28); color: var(–-tension); }
+.v-reject::before { background: var(–-tension); }
+
+.axiom-table { display: grid; gap: 2px; margin: 28px 0; border: 1px solid var(–-border); background: rgba(201,168,76,0.08); }
+.ax-row { display: grid; grid-template-columns: 56px 1fr auto; gap: 2px; background: var(–-deep); }
+.ax-row.head { background: rgba(201,168,76,0.06); }
+.ax-cell { padding: 13px 17px; background: rgba(14,11,8,0.96); font-size: 0.88rem; line-height: 1.55; }
+.ax-row.head .ax-cell { font-family: ‘Cinzel’, serif; font-size: 0.68rem; letter-spacing: 0.2em; color: var(–-gold); text-transform: uppercase; background: transparent; }
+.ax-sym { font-family: ‘Cinzel’, serif; color: var(–-gold); font-size: 0.92rem; display: flex; align-items: center; justify-content: center; }
+
+.theorem-block { margin: 32px 0; border: 1px solid var(–-border); background: var(–-panel); overflow: hidden; }
+.theorem-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid var(–-border); background: rgba(201,168,76,0.04); gap: 10px; flex-wrap: wrap; }
+.theorem-label { font-family: ‘Cinzel’, serif; font-size: 0.7rem; letter-spacing: 0.18em; color: var(–-gold); text-transform: uppercase; }
+.theorem-body { padding: 18px 20px; }
+.theorem-body p { margin-bottom: 0.9em; font-size: 0.93rem; }
+.theorem-body p:last-child { margin-bottom: 0; }
+
+.issues { margin: 18px 0; display: grid; gap: 9px; }
+.issue { display: grid; grid-template-columns: 20px 1fr; gap: 12px; padding: 13px 16px; border: 1px solid rgba(191,90,58,0.2); background: rgba(191,90,58,0.04); font-size: 0.91rem; line-height: 1.6; align-items: start; }
+.issue-icon { color: var(–-tension); font-size: 0.65rem; padding-top: 5px; font-family: ‘Cinzel’, serif; }
+
+.rec-list { display: grid; gap: 14px; margin: 24px 0; }
+.rec { display: grid; grid-template-columns: 90px 1fr; gap: 14px; align-items: start; padding: 16px 18px; border: 1px solid var(–-border); background: rgba(201,168,76,0.02); }
+.rec-num { font-family: ‘Cinzel’, serif; font-size: 0.7rem; letter-spacing: 0.16em; color: var(–-gold); text-transform: uppercase; padding-top: 2px; }
+.rec-body { font-size: 0.91rem; line-height: 1.62; color: #c0b8a8; }
+
+.final-panel { margin: 56px 0; padding: 40px; text-align: center; background: rgba(139,58,26,0.07); border: 1px solid rgba(139,58,26,0.3); position: relative; overflow: hidden; }
+.final-panel::before { content: ‘’; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(201,168,76,0.04) 0%, transparent 70%); pointer-events: none; }
+.final-label { font-family: ‘Cinzel’, serif; font-size: 0.68rem; letter-spacing: 0.38em; color: var(–-gold); text-transform: uppercase; display: block; margin-bottom: 20px; position: relative; }
+.final-panel p { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 1.15rem; line-height: 1.8; color: var(–-parchment); position: relative; margin: 0; }
+
+/* ── PARADOX COMPONENTS ── */
+.premise-block { margin: 20px 0; border: 1px solid var(–-border); overflow: hidden; }
+.premise-header { padding: 8px 16px; background: rgba(201,168,76,0.05); border-bottom: 1px solid var(–-border); font-family: ‘Cinzel’, serif; font-size: 0.64rem; letter-spacing: 0.26em; color: var(–-gold); text-transform: uppercase; }
+.premise-row { display: grid; grid-template-columns: 95px 1fr; border-bottom: 1px solid rgba(201,168,76,0.06); background: rgba(14,11,8,0.96); }
+.premise-row:last-child { border-bottom: none; }
+.pr-tag { padding: 11px 14px; font-family: ‘Cinzel’, serif; font-size: 0.68rem; letter-spacing: 0.1em; color: rgba(201,168,76,0.55); border-right: 1px solid rgba(201,168,76,0.06); display: flex; align-items: flex-start; padding-top: 13px; }
+.pr-body { padding: 11px 16px; font-size: 0.9rem; line-height: 1.6; }
+
+.fork { margin: 18px 0; border: 1px solid rgba(191,90,58,0.22); background: rgba(191,90,58,0.03); overflow: hidden; }
+.fork-header { padding: 9px 16px; background: rgba(191,90,58,0.08); border-bottom: 1px solid rgba(191,90,58,0.14); font-family: ‘Cinzel’, serif; font-size: 0.65rem; letter-spacing: 0.26em; color: var(–-tension); text-transform: uppercase; }
+.fork-body { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(191,90,58,0.1); }
+.fork-arm { padding: 14px 18px; background: rgba(14,11,8,0.97); font-size: 0.9rem; line-height: 1.6; }
+.arm-label { font-family: ‘Cinzel’, serif; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 7px; display: block; }
+.arm-yes .arm-label { color: var(–-valid); }
+.arm-no .arm-label { color: var(–-tension); }
+.arm-consequence { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 0.93rem; color: #c8c0b0; }
+
+.probe-box { margin: 20px 0; padding: 20px 22px; border: 1px solid rgba(122,154,191,0.2); background: rgba(122,154,191,0.04); }
+.probe-label { font-family: ‘Cinzel’, serif; font-size: 0.65rem; letter-spacing: 0.28em; color: var(–-probe); text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 9px; }
+.probe-label::before { content: ‘◈’; font-size: 0.72rem; }
+.probe-items { display: grid; gap: 9px; }
+.probe-item { display: grid; grid-template-columns: 16px 1fr; gap: 10px; font-size: 0.9rem; line-height: 1.58; align-items: start; }
+.probe-dot { color: var(–-probe); opacity: 0.55; font-size: 0.58rem; padding-top: 5px; }
+
+.resolution-block { margin: 18px 0; padding: 16px 20px; border: 1px solid rgba(76,175,130,0.18); background: rgba(76,175,130,0.03); font-size: 0.92rem; line-height: 1.65; }
+.resolution-label { font-family: ‘Cinzel’, serif; font-size: 0.63rem; letter-spacing: 0.23em; color: var(–-valid); text-transform: uppercase; margin-bottom: 9px; display: flex; align-items: center; gap: 7px; }
+.resolution-label::before { content: ‘→’; }
+
+/* ── PROOF COMPONENTS ── */
+.proof-block { margin: 26px 0; border: 1px solid var(–-border); overflow: hidden; }
+.proof-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 17px; background: rgba(201,168,76,0.04); border-bottom: 1px solid var(–-border); gap: 10px; flex-wrap: wrap; }
+.proof-label { font-family: ‘Cinzel’, serif; font-size: 0.67rem; letter-spacing: 0.2em; color: var(–-gold); text-transform: uppercase; }
+.proof-verdict { font-family: ‘Cinzel’, serif; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; flex-shrink: 0; }
+.pv-valid { background: rgba(76,175,130,0.1); border: 1px solid rgba(76,175,130,0.26); color: var(–-valid); }
+.pv-tension { background: rgba(191,90,58,0.1); border: 1px solid rgba(191,90,58,0.26); color: var(–-tension); }
+.pv-resolved { background: rgba(122,154,191,0.1); border: 1px solid rgba(122,154,191,0.26); color: var(–-probe); }
+
+.proof-steps { background: var(–-mono-bg); }
+.step { display: grid; grid-template-columns: 34px 1fr auto; border-bottom: 1px solid rgba(255,255,255,0.03); align-items: start; }
+.step:last-child { border-bottom: none; }
+.step-n { padding: 12px 0 12px 14px; font-family: ‘JetBrains Mono’, monospace; font-size: 0.7rem; color: rgba(201,168,76,0.32); line-height: 1.5; flex-shrink: 0; }
+.step-content { padding: 11px 14px; font-size: 0.9rem; line-height: 1.58; color: #c8c0b0; }
+.step-content .formula { font-family: ‘JetBrains Mono’, monospace; font-size: 0.76rem; color: #d4b870; display: block; margin-top: 3px; letter-spacing: 0.02em; }
+.step-source { padding: 12px 12px 12px 6px; font-family: ‘Cinzel’, serif; font-size: 0.6rem; letter-spacing: 0.09em; color: rgba(201,168,76,0.36); white-space: nowrap; line-height: 1.5; padding-top: 14px; }
+
+.proof-conclusion { padding: 13px 17px; border-top: 1px solid rgba(201,168,76,0.1); background: rgba(201,168,76,0.04); font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 0.97rem; color: #d8d0c0; line-height: 1.6; }
+.proof-conclusion .formula-line { font-family: ‘JetBrains Mono’, monospace; font-style: normal; font-size: 0.78rem; color: #d4b870; display: block; margin-bottom: 7px; letter-spacing: 0.02em; }
+
+.collision { margin: 26px 0; border: 1px solid rgba(191,90,58,0.24); background: rgba(191,90,58,0.04); overflow: hidden; }
+.collision-header { padding: 9px 16px; background: rgba(191,90,58,0.09); border-bottom: 1px solid rgba(191,90,58,0.16); font-family: ‘Cinzel’, serif; font-size: 0.65rem; letter-spacing: 0.26em; color: var(–-tension); text-transform: uppercase; display: flex; align-items: center; gap: 7px; }
+.collision-header::before { content: ‘⚡’; font-size: 0.78rem; }
+.collision-body { padding: 16px 20px; display: grid; gap: 9px; }
+.collision-line { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; font-size: 0.9rem; line-height: 1.58; }
+.cl-bullet { color: var(–-tension); font-size: 0.62rem; padding-top: 4px; }
+.cl-formula { font-family: ‘JetBrains Mono’, monospace; font-size: 0.78rem; color: #d4b870; display: block; margin-top: 2px; }
+
+.resolution-panel { margin: 22px 0; border: 1px solid rgba(122,154,191,0.2); background: rgba(122,154,191,0.03); overflow: hidden; }
+.resolution-panel-header { padding: 9px 16px; background: rgba(122,154,191,0.07); border-bottom: 1px solid rgba(122,154,191,0.14); font-family: ‘Cinzel’, serif; font-size: 0.65rem; letter-spacing: 0.26em; color: var(–-probe); text-transform: uppercase; display: flex; align-items: center; gap: 7px; }
+.resolution-panel-header::before { content: ‘→’; }
+.resolution-panel-body { padding: 18px 20px; display: grid; gap: 14px; }
+.res-option { padding: 13px 16px; border: 1px solid rgba(122,154,191,0.14); background: rgba(10,8,6,0.6); }
+.res-opt-label { font-family: ‘Cinzel’, serif; font-size: 0.63rem; letter-spacing: 0.18em; color: var(–-probe); text-transform: uppercase; margin-bottom: 9px; display: block; }
+.res-formula { font-family: ‘JetBrains Mono’, monospace; font-size: 0.76rem; color: #d4b870; background: rgba(201,168,76,0.05); padding: 9px 13px; display: block; margin: 9px 0; line-height: 1.6; letter-spacing: 0.02em; }
+.res-option p { font-size: 0.9rem; line-height: 1.62; margin-bottom: 0.75em; }
+.res-option p:last-child { margin-bottom: 0; }
+
+/* ── BOOK COMPONENTS (shared I & II) ── */
+.def-list { display: grid; gap: 2px; }
+.def-row { display: grid; grid-template-columns: 54px 1fr; gap: 2px; }
+.def-num { background: rgba(201,168,76,0.06); padding: 13px 14px; font-family: ‘Cinzel’, serif; font-size: 0.66rem; letter-spacing: 0.1em; color: rgba(201,168,76,0.52); display: flex; align-items: flex-start; padding-top: 15px; }
+.def-body { background: rgba(14,11,8,0.95); padding: 12px 17px; border-left: 1px solid rgba(201,168,76,0.07); font-size: 0.91rem; line-height: 1.62; }
+.def-term { font-family: ‘Cinzel’, serif; font-size: 0.76rem; letter-spacing: 0.11em; color: var(–-gold); text-transform: uppercase; display: block; margin-bottom: 4px; }
+.def-sym { font-family: ‘JetBrains Mono’, monospace; font-size: 0.75em; color: var(–-gold); background: rgba(201,168,76,0.07); padding: 1px 5px; }
+
+.post-list { display: grid; gap: 9px; }
+.post-item { display: grid; grid-template-columns: 84px 1fr; border: 1px solid var(–-border); overflow: hidden; }
+.post-tag { padding: 13px; background: rgba(201,168,76,0.05); border-right: 1px solid var(–-border); font-family: ‘Cinzel’, serif; font-size: 0.63rem; letter-spacing: 0.1em; color: rgba(201,168,76,0.48); text-transform: uppercase; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.3; }
+.post-body { padding: 13px 17px; font-size: 0.91rem; line-height: 1.62; background: rgba(14,11,8,0.92); }
+.post-title { font-family: ‘Cinzel’, serif; font-size: 0.7rem; letter-spacing: 0.09em; color: #c0b090; display: block; margin-bottom: 4px; text-transform: uppercase; }
+
+.axiom-list { display: grid; gap: 2px; }
+.axiom-row2 { display: grid; grid-template-columns: 76px 1fr; gap: 2px; background: rgba(201,168,76,0.09); }
+.ax-num2 { padding: 15px; background: rgba(14,11,8,0.96); font-family: ‘Cinzel’, serif; font-size: 0.63rem; letter-spacing: 0.1em; color: rgba(201,168,76,0.48); text-transform: uppercase; display: flex; align-items: flex-start; padding-top: 17px; line-height: 1.3; }
+.ax-body { padding: 13px 17px; background: rgba(10,8,6,0.97); font-size: 0.91rem; line-height: 1.62; }
+.ax-title { font-family: ‘Cinzel’, serif; font-size: 0.74rem; letter-spacing: 0.1em; color: var(–-gold); display: block; margin-bottom: 5px; text-transform: uppercase; }
+
+.prop-block { margin: 18px 0; border: 1px solid var(–-border); overflow: hidden; }
+.prop-header { display: flex; align-items: center; justify-content: space-between; padding: 9px 17px; background: rgba(201,168,76,0.04); border-bottom: 1px solid var(–-border); gap: 10px; flex-wrap: wrap; }
+.prop-label { font-family: ‘Cinzel’, serif; font-size: 0.66rem; letter-spacing: 0.18em; color: var(–-gold); text-transform: uppercase; }
+.prop-title-right { font-family: ‘IM Fell English’, serif; font-size: 0.88rem; color: #b8a888; flex: 1; text-align: right; font-style: italic; }
+.prop-body { padding: 15px 18px; font-size: 0.91rem; line-height: 1.68; background: rgba(14,11,8,0.92); }
+.prop-body p { margin-bottom: 0.88em; }
+.prop-body p:last-child { margin-bottom: 0; }
+.qed { display: inline-block; margin-left: 5px; font-family: ‘Cinzel’, serif; font-size: 0.68rem; color: rgba(201,168,76,0.38); letter-spacing: 0.1em; }
+.is-theorem .prop-header { background: rgba(201,168,76,0.06); border-bottom-color: rgba(201,168,76,0.18); }
+
+.proof-section-inner { padding: 13px 18px 15px; background: rgba(10,8,6,0.97); border-top: 1px solid rgba(201,168,76,0.06); }
+.proof-header-inner { font-family: ‘Cinzel’, serif; font-size: 0.6rem; letter-spacing: 0.26em; color: rgba(201,168,76,0.38); text-transform: uppercase; margin-bottom: 9px; display: flex; align-items: center; gap: 9px; }
+.proof-header-inner::after { content: ‘’; flex: 1; height: 1px; background: rgba(201,168,76,0.06); }
+.proof-text { font-size: 0.88rem; line-height: 1.68; color: #b0a898; }
+.proof-text p { margin-bottom: 0.82em; }
+.proof-text p:last-child { margin-bottom: 0; }
+
+.cor-list { display: grid; gap: 7px; }
+.cor-item { display: grid; grid-template-columns: 84px 1fr; border: 1px solid var(–-border); overflow: hidden; }
+.cor-tag { padding: 11px 13px; background: rgba(201,168,76,0.04); border-right: 1px solid var(–-border); font-family: ‘Cinzel’, serif; font-size: 0.61rem; letter-spacing: 0.1em; color: rgba(201,168,76,0.42); text-transform: uppercase; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.4; }
+.cor-body { padding: 11px 17px; font-size: 0.9rem; line-height: 1.62; background: rgba(12,9,6,0.95); }
+.cor-title { font-family: ‘Cinzel’, serif; font-size: 0.68rem; letter-spacing: 0.08em; color: #c0b090; display: block; margin-bottom: 4px; text-transform: uppercase; }
+
+.scholium-panel { margin: 26px 0; padding: 28px 32px; border: 1px solid rgba(122,154,191,0.2); background: rgba(122,154,191,0.03); }
+.scholium-label { font-family: ‘Cinzel’, serif; font-size: 0.63rem; letter-spacing: 0.28em; color: var(–-probe); text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 9px; }
+.scholium-label::before { content: ‘◈’; font-size: 0.72rem; }
+.scholium-items { display: grid; gap: 12px; }
+.scholium-item { display: grid; grid-template-columns: 20px 1fr; gap: 11px; align-items: start; font-size: 0.9rem; line-height: 1.62; }
+.s-num { font-family: ‘Cinzel’, serif; font-size: 0.66rem; color: var(–-probe); opacity: 0.58; padding-top: 2px; }
+
+.scholium-text-panel { margin: 26px 0; padding: 30px 34px; border: 1px solid rgba(176,122,76,0.2); background: rgba(176,122,76,0.03); text-align: center; position: relative; }
+.scholium-text-panel::before { content: ‘’; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(201,168,76,0.03) 0%, transparent 70%); pointer-events: none; }
+.scholium-text { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 1.18rem; color: var(–-parchment); line-height: 1.75; position: relative; }
+
+/* ── ZODIACAL COMPONENTS ── */
+.orientation-strip { margin: 0 0 28px; display: grid; gap: 2px; }
+.orient-row { display: grid; grid-template-columns: 96px 1fr; gap: 2px; }
+.orient-sym { background: rgba(201,168,76,0.06); padding: 10px 13px; font-family: ‘Cinzel’, serif; font-size: 0.66rem; letter-spacing: 0.1em; color: rgba(201,168,76,0.57); display: flex; align-items: center; }
+.orient-text { background: rgba(14,11,8,0.95); padding: 10px 15px; font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 0.89rem; color: #c0b8a8; border-left: 1px solid rgba(201,168,76,0.07); }
+
+.sign-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(201,168,76,0.08); border: 1px solid var(–-border); margin-bottom: 32px; }
+.sign-card { padding: 16px 16px 14px; background: rgba(10,8,5,0.97); position: relative; }
+.sign-card::before { content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+.fire { background: rgba(12,8,5,0.97); } .fire::before { background: rgba(191,90,50,0.4); }
+.earth { background: rgba(8,10,5,0.97); } .earth::before { background: rgba(100,140,80,0.35); }
+.air { background: rgba(5,8,12,0.97); } .air::before { background: rgba(120,155,200,0.35); }
+.water { background: rgba(5,7,12,0.97); } .water::before { background: rgba(70,100,170,0.4); }
+.sign-name { font-family: ‘Cinzel’, serif; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.11em; color: var(–-parchment); text-transform: uppercase; margin-bottom: 2px; }
+.sign-sector { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 0.8rem; color: var(–-ash); margin-bottom: 9px; }
+.sign-virtue-label { font-family: ‘Cinzel’, serif; font-size: 0.56rem; letter-spacing: 0.19em; color: rgba(201,168,76,0.42); text-transform: uppercase; margin-bottom: 2px; display: block; }
+.sign-virtue { font-size: 0.89rem; color: var(–-gold); margin-bottom: 7px; display: block; }
+.sign-vices { display: flex; flex-direction: column; gap: 3px; }
+.vice-row { display: grid; grid-template-columns: 42px 1fr; gap: 5px; align-items: baseline; }
+.vice-tag { font-family: ‘Cinzel’, serif; font-size: 0.53rem; letter-spacing: 0.11em; text-transform: uppercase; padding-top: 1px; }
+.excess { color: rgba(191,80,50,0.62); } .defect { color: rgba(100,140,191,0.58); }
+.vice-name { font-size: 0.81rem; color: #a09888; line-height: 1.3; }
+
+.dashboard { border: 1px solid var(–-border); background: var(–-panel2); margin-bottom: 28px; overflow: hidden; }
+.dashboard-header { padding: 11px 18px; background: rgba(201,168,76,0.05); border-bottom: 1px solid var(–-border); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.dash-title { font-family: ‘Cinzel’, serif; font-size: 0.68rem; letter-spacing: 0.2em; color: var(–-gold); text-transform: uppercase; }
+.date-field { font-family: ‘Cinzel’, serif; font-size: 0.63rem; letter-spacing: 0.14em; color: rgba(201,168,76,0.37); text-transform: uppercase; }
+.dash-table { width: 100%; border-collapse: collapse; }
+.dash-table th { padding: 8px 11px; font-family: ‘Cinzel’, serif; font-size: 0.58rem; letter-spacing: 0.17em; color: rgba(201,168,76,0.46); text-transform: uppercase; background: rgba(201,168,76,0.03); border-bottom: 1px solid rgba(201,168,76,0.07); text-align: left; font-weight: 400; }
+.dash-table td { padding: 8px 11px; font-size: 0.81rem; line-height: 1.4; border-bottom: 1px solid rgba(201,168,76,0.04); vertical-align: top; }
+.dash-table tr:last-child td { border-bottom: none; }
+.col-sign { font-family: ‘Cinzel’, serif; font-size: 0.7rem; letter-spacing: 0.07em; color: var(–-parchment); white-space: nowrap; width: 90px; }
+.col-sector { color: var(–-ash); font-style: italic; width: 96px; }
+.col-virtue { color: var(–-gold); width: 105px; }
+.col-vices { color: #908880; font-size: 0.77rem; }
+.col-today { width: 90px; }
+.write-line { display: block; border-bottom: 1px solid rgba(201,168,76,0.11); min-height: 16px; width: 72px; }
+
+.section-head-inner { font-family: ‘Cinzel’, serif; font-size: 0.6rem; letter-spacing: 0.26em; color: rgba(201,168,76,0.37); text-transform: uppercase; padding: 9px 18px; border-top: 1px solid rgba(201,168,76,0.07); border-bottom: 1px solid rgba(201,168,76,0.07); background: rgba(201,168,76,0.025); display: flex; align-items: center; gap: 9px; margin: 0; }
+.checklist { margin: 20px 18px; display: grid; gap: 7px; }
+.check-item { display: grid; grid-template-columns: 18px 1fr; gap: 11px; align-items: start; font-size: 0.88rem; line-height: 1.52; }
+.check-box { width: 13px; height: 13px; border: 1px solid rgba(201,168,76,0.28); margin-top: 3px; flex-shrink: 0; }
+.reflection-block { margin: 0 18px 20px; display: grid; gap: 14px; }
+.reflect-item { display: grid; gap: 5px; }
+.reflect-q { display: flex; align-items: baseline; gap: 9px; font-size: 0.86rem; color: #c0b8a8; }
+.reflect-sym { font-family: ‘Cinzel’, serif; font-size: 0.66rem; color: var(–-gold); letter-spacing: 0.07em; flex-shrink: 0; min-width: 68px; }
+.write-line-long { display: block; border-bottom: 1px solid rgba(201,168,76,0.11); height: 20px; margin-top: 3px; }
+
+.workbook { border: 1px solid var(–-border); background: var(–-panel2); margin-bottom: 28px; overflow: hidden; }
+.wb-header { padding: 13px 18px; background: rgba(201,168,76,0.05); border-bottom: 1px solid var(–-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 9px; }
+.wb-title { font-family: ‘Cinzel’, serif; font-size: 0.7rem; letter-spacing: 0.19em; color: var(–-gold); text-transform: uppercase; }
+.wb-meta { font-family: ‘Cinzel’, serif; font-size: 0.6rem; letter-spacing: 0.14em; color: rgba(201,168,76,0.35); text-transform: uppercase; }
+.wb-fields { padding: 14px 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 22px; border-bottom: 1px solid rgba(201,168,76,0.06); }
+.wb-field { display: grid; gap: 4px; }
+.wb-field-label { font-family: ‘Cinzel’, serif; font-size: 0.58rem; letter-spacing: 0.19em; color: rgba(201,168,76,0.42); text-transform: uppercase; }
+.wb-line { display: block; border-bottom: 1px solid rgba(201,168,76,0.11); height: 20px; }
+.wb-part { padding: 14px 18px 18px; border-top: 1px solid rgba(201,168,76,0.05); }
+.wb-part-title { font-family: ‘Cinzel’, serif; font-size: 0.64rem; letter-spacing: 0.2em; color: rgba(201,168,76,0.46); text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 9px; }
+.wb-part-title::after { content: ‘’; flex: 1; height: 1px; background: rgba(201,168,76,0.07); }
+.wb-prompt { display: grid; gap: 12px; }
+.wb-prompt-item { display: grid; gap: 4px; }
+.wb-prompt-q { font-size: 0.86rem; color: #b8b0a0; line-height: 1.48; }
+.wb-line-sm { display: block; border-bottom: 1px solid rgba(201,168,76,0.11); height: 19px; }
+.wb-line-lg { display: block; border-bottom: 1px solid rgba(201,168,76,0.11); height: 19px; margin-top: 5px; }
+
+/* ── BACK MATTER COMPONENTS ── */
+.copyright-block { border: 1px solid var(–-border); background: var(–-panel); padding: 40px 44px; text-align: center; }
+.cp-title { font-family: ‘Cinzel’, serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.06em; color: var(–-parchment); margin-bottom: 7px; }
+.cp-subtitle { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 0.93rem; color: var(–-ash); margin-bottom: 32px; }
+.cp-rule { width: 54px; height: 1px; background: linear-gradient(to right, transparent, var(–-gold), transparent); margin: 0 auto 28px; }
+.cp-notice { font-size: 0.86rem; line-height: 1.78; color: #a09888; margin-bottom: 24px; }
+.cp-rights { font-family: ‘Cinzel’, serif; font-size: 0.66rem; letter-spacing: 0.17em; color: rgba(201,168,76,0.42); text-transform: uppercase; margin-bottom: 28px; }
+.cp-isbn-block { padding: 14px 22px; border: 1px solid var(–-border); display: inline-block; background: rgba(201,168,76,0.03); margin-bottom: 24px; }
+.cp-isbn-label { font-family: ‘Cinzel’, serif; font-size: 0.58rem; letter-spacing: 0.23em; color: rgba(201,168,76,0.38); text-transform: uppercase; display: block; margin-bottom: 5px; }
+.cp-isbn { font-family: ‘JetBrains Mono’, monospace; font-size: 0.8rem; color: #b0a888; letter-spacing: 0.06em; }
+.cp-edition { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 0.86rem; color: var(–-ash); }
+
+.toc-block { display: grid; gap: 2px; }
+.toc-part { margin-bottom: 7px; }
+.toc-part-label { font-family: ‘Cinzel’, serif; font-size: 0.63rem; letter-spacing: 0.26em; color: rgba(201,168,76,0.42); text-transform: uppercase; padding: 7px 0 5px; border-bottom: 1px solid rgba(201,168,76,0.07); margin-bottom: 3px; display: flex; align-items: center; gap: 11px; }
+.toc-part-label::after { content: ‘’; flex: 1; height: 1px; background: rgba(201,168,76,0.06); }
+.toc-entry { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 7px; padding: 4px 0; border-bottom: 1px dotted rgba(201,168,76,0.06); font-size: 0.89rem; }
+.toc-entry:last-child { border-bottom: none; }
+.toc-entry-sub { padding-left: 18px; }
+.toc-title { display: flex; align-items: baseline; gap: 9px; }
+.toc-num { font-family: ‘Cinzel’, serif; font-size: 0.61rem; letter-spacing: 0.09em; color: rgba(201,168,76,0.47); flex-shrink: 0; min-width: 18px; }
+.toc-name { color: #c0b8a8; line-height: 1.38; }
+.toc-name-main { color: var(–-parchment); font-size: 0.93rem; }
+.toc-dot { flex: 1; border-bottom: 1px dotted rgba(201,168,76,0.13); height: 1px; margin: 0 3px; align-self: center; min-width: 18px; }
+.toc-page { font-family: ‘Cinzel’, serif; font-size: 0.65rem; letter-spacing: 0.09em; color: rgba(201,168,76,0.42); white-space: nowrap; }
+
+.gloss-list { display: grid; gap: 2px; }
+.gloss-entry { display: grid; grid-template-columns: 132px 1fr; gap: 2px; }
+.gloss-term { background: rgba(201,168,76,0.06); padding: 12px 14px; font-family: ‘Cinzel’, serif; font-size: 0.7rem; letter-spacing: 0.09em; color: var(–-gold); text-transform: uppercase; display: flex; align-items: flex-start; padding-top: 14px; line-height: 1.3; }
+.gloss-def { background: rgba(14,11,8,0.95); padding: 11px 17px; border-left: 1px solid rgba(201,168,76,0.07); font-size: 0.89rem; line-height: 1.62; }
+.gloss-sym { font-family: ‘JetBrains Mono’, monospace; font-size: 0.73em; color: #d4b870; background: rgba(201,168,76,0.07); padding: 1px 5px; margin-right: 3px; }
+.gloss-cross { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 0.81rem; color: rgba(201,168,76,0.46); margin-top: 3px; display: block; }
+
+.ref-intro { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 0.91rem; color: var(–-ash); margin-bottom: 24px; line-height: 1.68; padding: 14px 18px; border-left: 2px solid rgba(201,168,76,0.2); background: rgba(201,168,76,0.025); }
+.ref-section { margin-bottom: 28px; }
+.ref-section-label { font-family: ‘Cinzel’, serif; font-size: 0.63rem; letter-spacing: 0.26em; color: rgba(201,168,76,0.42); text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 9px; }
+.ref-section-label::after { content: ‘’; flex: 1; height: 1px; background: rgba(201,168,76,0.07); }
+.ref-list { display: grid; gap: 7px; }
+.ref-item { display: grid; grid-template-columns: 28px 1fr; gap: 11px; align-items: start; font-size: 0.84rem; line-height: 1.58; color: #a09888; padding: 9px 13px; background: rgba(12,9,6,0.7); border: 1px solid rgba(201,168,76,0.06); }
+.ref-num { font-family: ‘Cinzel’, serif; font-size: 0.63rem; color: rgba(201,168,76,0.42); padding-top: 2px; text-align: right; }
+.ref-text { color: #a8a098; }
+.ref-text em { font-style: italic; color: #b8b0a0; }
+.ref-url { font-family: ‘JetBrains Mono’, monospace; font-size: 0.7rem; color: rgba(122,154,191,0.65); display: block; margin-top: 2px; word-break: break-all; }
+
+.colophon { margin-top: 52px; padding: 28px 32px; border: 1px solid var(–-border); background: var(–-panel); text-align: center; }
+.col-label { font-family: ‘Cinzel’, serif; font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(201,168,76,0.37); text-transform: uppercase; margin-bottom: 14px; display: block; }
+.col-text { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 0.88rem; color: var(–-ash); line-height: 1.72; }
+
+/* ── LEGEND ── */
+.legend { margin: 52px 0; padding: 24px 28px; border: 1px solid var(–-border); background: var(–-panel); }
+.legend-label { font-family: ‘Cinzel’, serif; font-size: 0.66rem; letter-spacing: 0.31em; color: var(–-gold); text-transform: uppercase; margin-bottom: 16px; display: block; }
+.legend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 26px; }
+.legend-item { display: grid; grid-template-columns: auto 1fr; gap: 13px; align-items: baseline; font-size: 0.86rem; line-height: 1.48; }
+.legend-sym2 { font-family: ‘JetBrains Mono’, monospace; font-size: 0.76rem; color: var(–-gold); background: rgba(201,168,76,0.07); padding: 1px 5px; white-space: nowrap; }
+.legend-def { color: #a09888; }
+
+/* ── FOOTER ── */
+footer { padding: 40px 0 64px; text-align: center; border-top: 1px solid var(–-border); margin-top: 56px; }
+.footer-mark { font-family: ‘Cinzel’, serif; font-size: 0.66rem; letter-spacing: 0.28em; color: var(–-ash); text-transform: uppercase; }
+.footer-line { width: 1px; height: 48px; background: linear-gradient(to top, transparent, var(–-gold)); margin: 22px auto 0; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 680px) {
+.site-nav { gap: 10px; }
+.nav-title { display: none; }
+.sign-grid { grid-template-columns: repeat(2,1fr); }
+.wb-fields { grid-template-columns: 1fr; }
+.title-nav-grid { grid-template-columns: 1fr; }
+.fork-body { grid-template-columns: 1fr; }
+.legend-grid { grid-template-columns: 1fr; }
+.gloss-entry { grid-template-columns: 100px 1fr; }
+}
+@media (max-width: 440px) {
+.sign-grid { grid-template-columns: 1fr; }
+.dash-table .col-vices, .dash-table .col-virtue { display: none; }
+.operator-row { grid-template-columns: 70px 1fr; }
+.op-cell:last-child { display: none; }
+.ax-row { grid-template-columns: 52px 1fr; }
+.ax-cell:last-child { display: none; }
+}
+
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<!-- ── FIXED NAV ── -->
+
+<nav class="site-nav">
+  <span class="nav-title">The Emanatory Schema</span>
+  <div class="nav-links">
+    <a href="#title" class="nav-link">Home</a>
+    <a href="#essay" class="nav-link">Essay</a>
+    <a href="#analysis" class="nav-link">Analysis</a>
+    <a href="#paradoxes" class="nav-link">Paradoxes</a>
+    <a href="#proofs" class="nav-link">Proofs</a>
+    <a href="#book1" class="nav-link">Book I</a>
+    <a href="#book2" class="nav-link">Book II</a>
+    <a href="#doc3" class="nav-link">Journal</a>
+    <a href="#backmatter" class="nav-link">Apparatus</a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     TITLE PAGE
+════════════════════════════════════════ -->
+
+<div id="title" class="title-page">
+  <div class="title-line-top"></div>
+  <p class="title-eyebrow">Complete Edition · Seven Documents</p>
+  <h1 class="title-main">The Emanatory Schema</h1>
+  <p class="title-sub">A formal metaphysics of archetypal closure, axial transcendence, and cosmological ethics — with applied spiral journal</p>
+  <div class="title-ops">
+    <span class="title-op">M · Monad</span>
+    <span class="title-op">C₁₂ · Field</span>
+    <span class="title-op">T · Recursion</span>
+    <span class="title-op">S · Spiral</span>
+    <span class="title-op">A · Axis</span>
+    <span class="title-op">E · Expression</span>
+  </div>
+  <div class="title-rule"></div>
+  <div class="title-nav-grid">
+    <a href="#essay" class="title-nav-item"><span class="tni-num">Preface</span><span class="tni-title">The Source-Fire: A Generative Essay</span></a>
+    <a href="#analysis" class="title-nav-item"><span class="tni-num">Critical</span><span class="tni-title">Formal Analysis & Paradox Tests</span></a>
+    <a href="#book1" class="title-nav-item"><span class="tni-num">Book I</span><span class="tni-title">Archetypal Closure & Axial Transcendence</span></a>
+    <a href="#book2" class="title-nav-item"><span class="tni-num">Book II</span><span class="tni-title">On Cosmological Ethics</span></a>
+    <a href="#doc3" class="title-nav-item"><span class="tni-num">Document 3</span><span class="tni-title">Zodiacal Overlay & Spiral Journal</span></a>
+    <a href="#backmatter" class="title-nav-item"><span class="tni-num">Apparatus</span><span class="tni-title">Glossary, References & Index</span></a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ════════════════════════════════════════
+     ESSAY
+════════════════════════════════════════ -->
+
+<div id="essay" class="chapter">
+  <div class="chapter-banner">
+    <p class="chap-eyebrow">Preface · Essay</p>
+    <h2 class="chap-title">The Source-Fire</h2>
+    <p class="chap-sub">On building a generative metaphysical engine and discovering the structure I was already building</p>
+    <div class="chap-rule"></div>
+  </div>
+
+  <p>I didn't set out to build a system. I set out to understand things — to understand the nature of differentiation, the ethics of integration, the problem of multiplicity coexisting with unity. But somewhere across three works, a set of conversations, and years of orbiting the same questions from different angles, I realized I had been building something much larger than any single book. I had been constructing what I can only call a <em>generative metaphysical engine</em> — a source-structure from which all future thought could unfold coherently, without redundancy, without fragmentation.</p>
+  <p>This essay is my attempt to name what I've built. To compress it. To light it as a point of emanation.</p>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">I</span><h2>What I Have Actually Built</h2></div>
+    <p>Across three interlocking works I have arrived at what is, in essence, a five-operator ontological grammar. It looks like this:</p>
+    <div class="operator-grid">
+      <div class="operator-row header"><div class="op-cell">Op.</div><div class="op-cell">Ontological Level</div><div class="op-cell">Functional Role</div></div>
+      <div class="operator-row"><div class="op-cell"><span class="op-symbol">M</span></div><div class="op-cell"><span class="op-name">Ground</span></div><div class="op-cell"><span class="op-role">Irreducible monadic origin</span></div></div>
+      <div class="operator-row"><div class="op-cell"><span class="op-symbol">C₁₂</span></div><div class="op-cell"><span class="op-name">Archetypal manifold</span></div><div class="op-cell"><span class="op-role">Differentiated phenomenology</span></div></div>
+      <div class="operator-row"><div class="op-cell"><span class="op-symbol">T</span></div><div class="op-cell"><span class="op-name">Recursion</span></div><div class="op-cell"><span class="op-role">Closed cyclic persistence</span></div></div>
+      <div class="operator-row"><div class="op-cell"><span class="op-symbol">S</span></div><div class="op-cell"><span class="op-name">Spiral</span></div><div class="op-cell"><span class="op-role">Integrative traversal</span></div></div>
+      <div class="operator-row"><div class="op-cell"><span class="op-symbol">A</span></div><div class="op-cell"><span class="op-name">Axis</span></div><div class="op-cell"><span class="op-role">Trans-structural dimensional upgrade</span></div></div>
+    </div>
+    <p>Book I gives the metaphysical mechanics. The Zodiacal Overlay gives experiential diagnostics. Book II gives normative orientation. Together, they form a <strong>Closed-Open System</strong>: locally closed through <span class="sym">C₁₂</span> and <span class="sym">T</span>, globally open through <span class="sym">A</span>, mediated by <span class="sym">S</span>, and grounded in <span class="sym">M</span>.</p>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">II</span><h2>The Hidden Unification Principle</h2></div>
+    <div class="essay-blockquote"><p>Differentiation is not the problem. Unintegrated differentiation is.</p></div>
+    <p><span class="sym">C₁₂</span> is necessary for individuation. <span class="sym">T</span> is necessary for persistence. <span class="sym">S</span> is necessary for coherence. <span class="sym">A</span> is necessary for transcendence. <span class="sym">M</span> is necessary for unity. Every operator is solving part of one problem: <em>how can multiplicity exist without severing unity?</em> That is the spine. If everything I write going forward is to cohere, it must emanate from that spine.</p>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">III</span><h2>The Generative Axiom</h2></div>
+    <div class="axiom-panel">
+      <span class="axiom-panel-label">Principle of Structured Emanation</span>
+      <p>All phenomenological multiplicity arises as structured differentiation of a monadic ground; ethical maturation consists in recursive integration of that differentiation; liberation consists in trans-structural reorientation without annihilation of structure.</p>
+    </div>
+    <p>Everything I have written flows from that statement. This is what I mean when I call it a <em>generative axiom</em> — it contains its own expansion rule. It does not merely describe a system; it <em>is</em> the source from which the system perpetually re-emerges.</p>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">IV</span><h2>What Makes It Emanatory</h2></div>
+    <p>A system and an emanation-point are not the same thing. My expansion rule already exists within the framework: <em>any domain can be mapped onto M–C₁₂–T–S–A.</em></p>
+    <div class="domain-list">
+      <div class="domain-item"><div class="domain-name">Psychology</div><div class="domain-desc">Archetypes live in <span class="sym">C₁₂</span>. Trauma loops are <span class="sym">T</span>. Integration work is <span class="sym">S</span>. Transcendence is <span class="sym">A</span>.</div></div>
+      <div class="domain-item"><div class="domain-name">Cosmology</div><div class="domain-desc">Symmetry in <span class="sym">C₁₂</span>, closed systems as <span class="sym">T</span>, evolutionary processes as <span class="sym">S</span>, phase transitions as <span class="sym">A</span>.</div></div>
+      <div class="domain-item"><div class="domain-name">Politics</div><div class="domain-desc">Institutional recursion is <span class="sym">T</span>. Cultural archetypes are <span class="sym">C₁₂</span>. Reform is <span class="sym">S</span>. Paradigm shift is <span class="sym">A</span>.</div></div>
+      <div class="domain-item"><div class="domain-name">Mysticism</div><div class="domain-desc">Ego differentiation in <span class="sym">C₁₂</span>, karmic cycles as <span class="sym">T</span>, practice as <span class="sym">S</span>, awakening as <span class="sym">A</span>.</div></div>
+    </div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">V</span><h2>The Sixth Operator: Expression</h2></div>
+    <p>To function fully as a source-structure, the five primitives needed one additional meta-layer: <span class="sym">E</span>, Expression — the manifested articulation of the system within any specific domain. The complete generative sequence becomes:</p>
+    <div class="sequence">
+      <div class="sequence-formula">
+        <span>M</span><span class="arrow">→</span><span>C₁₂</span><span class="arrow">→</span><span>T</span><span class="arrow">→</span><span>S</span><span class="arrow">→</span><span>A</span><span class="arrow">→</span><span>E</span>
+      </div>
+      <div class="sequence-labels">
+        <div class="seq-item"><span class="s-sym">M</span><span class="s-label">Ground</span></div>
+        <div class="seq-item"><span class="s-sym">C₁₂</span><span class="s-label">Differentiation</span></div>
+        <div class="seq-item"><span class="s-sym">T</span><span class="s-label">Closure</span></div>
+        <div class="seq-item"><span class="s-sym">S</span><span class="s-label">Integration</span></div>
+        <div class="seq-item"><span class="s-sym">A</span><span class="s-label">Transcendence</span></div>
+        <div class="seq-item"><span class="s-sym">E</span><span class="s-label">Expression</span></div>
+      </div>
+    </div>
+    <p>After <span class="sym">A</span>, the system does not terminate. It re-expresses at a higher octave. The architecture is <strong>fractal</strong>. The engine is running.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     ANALYSIS
+════════════════════════════════════════ -->
+
+<div id="analysis" class="chapter">
+  <div class="chapter-banner">
+    <p class="chap-eyebrow">Critical Apparatus · Formal Assessment</p>
+    <h2 class="chap-title">On the Logical Status of the Schema</h2>
+    <p class="chap-sub">An evaluation of internal coherence, axiom plausibility, and philosophical standing</p>
+    <div class="chap-rule"></div>
+  </div>
+
+  <p>This is an internally tidy symbolic system with clear structural motifs, but its axioms are metaphysically loaded and not independently justified, so the "theorems" are conditionally valid — given the picture — rather than demonstratively necessary.</p>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">I</span><h2>Formal Coherence</h2></div>
+    <p>Taken as a formal language, the system has a domain of discourse, primitive symbols, and an inference structure modeled on Euclidean-style axiomatics. Definitions are mostly <em>intensional</em>, not eliminative. Postulates introduce existence commitments; axioms specify structural constraints. The derivations are at least informally valid — they restate what was encoded at the definitional level.</p>
+    <div class="axiom-table">
+      <div class="ax-row head"><div class="ax-cell">Prop.</div><div class="ax-cell">Claim</div><div class="ax-cell">Status</div></div>
+      <div class="ax-row"><div class="ax-cell ax-sym">P1</div><div class="ax-cell">Archetypal Necessity — individuation presupposes <span class="sym">C₁₂</span></div><div class="ax-cell"><span class="verdict v-valid">Circular but consistent</span></div></div>
+      <div class="ax-row"><div class="ax-cell ax-sym">P2</div><div class="ax-cell">Impossibility of Horizontal Escape</div><div class="ax-cell"><span class="verdict v-valid">Valid given Ax. I</span></div></div>
+      <div class="ax-row"><div class="ax-cell ax-sym">P3</div><div class="ax-cell">Axial Possibility — alignment with <span class="sym">A</span> suspends closure</div><div class="ax-cell"><span class="verdict v-caution">Analytic by definition</span></div></div>
+      <div class="ax-row"><div class="ax-cell ax-sym">T3</div><div class="ax-cell">Dimensional Upgrade</div><div class="ax-cell"><span class="verdict v-caution">Intelligible metaphor</span></div></div>
+    </div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">II</span><h2>Status of the Axioms</h2></div>
+    <p>The real question is whether the axioms are plausible as claims about reality, not merely as rules of a game.</p>
+    <div class="theorem-block">
+      <div class="theorem-header"><span class="theorem-label">C₁₂ — Twelvefold Archetypal Field</span><span class="verdict v-reject">Epistemically unmotivated</span></div>
+      <div class="theorem-body"><p>There is no argument given why the space of possible identity-forms is exactly twelvefold rather than <em>n</em>-fold. Modern metaphysics grounds individuation in spatiotemporal location, causal roles, or qualitative profiles — not a fixed esoteric schema.</p></div>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-header"><span class="theorem-label">M — Origin Irreducibility</span><span class="verdict v-caution">Stance-dependent</span></div>
+      <div class="theorem-body"><p>Axiom II expresses the standard emanationist move. Reasonable but controversial — acceptable within a Platonic/Sethian framework, not compelled by neutral reasoning.</p></div>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-header"><span class="theorem-label">A — Orthogonal Axiality</span><span class="verdict v-caution">Heuristic</span></div>
+      <div class="theorem-body"><p>The "orthogonal axis" metaphor is compelling and widely used in psychospiritual literature. As metaphysics, it organizes symbolic experience, but doesn't yet rise to the level of a theory that can be uniquely argued for against rivals.</p></div>
+    </div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">III</span><h2>Overall Placement</h2></div>
+    <div class="final-panel">
+      <span class="final-label">Assessment</span>
+      <p>From a contemporary analytic metaphysics standpoint, this system is best viewed as a coherent symbolic metaphysics or a "mythic geometry of consciousness" — not as a uniquely rationally or empirically compelled ontology.</p>
+    </div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">IV</span><h2>How to Strengthen the System</h2></div>
+    <div class="rec-list">
+      <div class="rec"><div class="rec-num">First</div><div class="rec-body"><strong>Clarify logical form.</strong> Explicitly type your primitives and formalize propositions in at least first-order logic or a simple modal language.</div></div>
+      <div class="rec"><div class="rec-num">Second</div><div class="rec-body"><strong>Separate symbolism from ontology.</strong> Treat the zodiacal twelve and Ophiuchus as interpretive layers on top of a more abstract structure.</div></div>
+      <div class="rec"><div class="rec-num">Third</div><div class="rec-body"><strong>Link to existing metaphysical debates.</strong> Map <span class="sym">M</span> to recognized notions, <span class="sym">C₁₂</span> to structured phenomenal space, and <span class="sym">A</span> to a recognized kind of meta-level operation.</div></div>
+      <div class="rec"><div class="rec-num">Fourth</div><div class="rec-body"><strong>Introduce discriminating consequences.</strong> Predict specific phenomenological sequences that could be contrasted with contemplative or clinical data.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PARADOXES
+════════════════════════════════════════ -->
+
+<div id="paradoxes" class="chapter">
+  <div class="chapter-banner">
+    <p class="chap-eyebrow">Dialectical Examination · Stress Tests & Proofs</p>
+    <h2 class="chap-title">Paradox Tests & Derived Contradictions</h2>
+    <p class="chap-sub">Six stress tests with formal proof sketches for the two strongest — locating exactly where refinement is required</p>
+    <div class="chap-rule"></div>
+  </div>
+
+  <!-- Notation legend -->
+
+  <div class="legend">
+    <span class="legend-label">Notation Key</span>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="legend-sym2">Trans(s)</span><span class="legend-def">spirit s is transcendent — in open manifold</span></div>
+      <div class="legend-item"><span class="legend-sym2">Align(s,A)</span><span class="legend-def">s is aligned with axial operator A</span></div>
+      <div class="legend-item"><span class="legend-sym2">TraverseAll(s)</span><span class="legend-def">s has traversed all sectors of C₁₂</span></div>
+      <div class="legend-item"><span class="legend-sym2">InC12(s)</span><span class="legend-def">s is operating entirely within C₁₂</span></div>
+      <div class="legend-item"><span class="legend-sym2">InternalOp(s,f)</span><span class="legend-def">operation f on s is internal to C₁₂</span></div>
+      <div class="legend-item"><span class="legend-sym2">GroundedIn(s,M)</span><span class="legend-def">s has its ultimate ground in M</span></div>
+    </div>
+  </div>
+
+  <!-- Paradox 1 -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">I</span><h2>Self-Escape Paradox — Closure vs. Transcendence</h2></div>
+    <p>Can a system that contains <span class="sym">A</span> and <span class="sym">S</span> still be called "closed" in the sense of Axiom I?</p>
+
+```
+<div class="premise-block">
+  <div class="premise-header">Setup</div>
+  <div class="premise-row"><span class="pr-tag">Ax. I</span><span class="pr-body">Within <span class="sym">C₁₂</span>, all transformations preserve closure.</span></div>
+  <div class="premise-row"><span class="pr-tag">Def. S</span><span class="pr-body"><span class="sym">S</span> is a spiral intersecting all archetypal sectors while progressively reorienting toward <span class="sym">A</span>.</span></div>
+  <div class="premise-row"><span class="pr-tag">Th. I</span><span class="pr-body"><span class="mono">Trans(s)</span> iff M primary ∧ <span class="mono">TraverseAll(s)</span> ∧ <span class="mono">Align(s,A)</span>.</span></div>
+</div>
+
+<div class="proof-block">
+  <div class="proof-header"><span class="proof-label">Derivation 1A · "Escape is impossible"</span><span class="proof-verdict pv-valid">Valid inside system</span></div>
+  <div class="proof-steps">
+    <div class="step"><span class="step-n">1</span><div class="step-content">Assume s is entirely within C₁₂.<span class="formula">InC12(s)</span></div><span class="step-source">Assume</span></div>
+    <div class="step"><span class="step-n">2</span><div class="step-content">Let f be any internal operation.<span class="formula">InternalOp(s,f)</span></div><span class="step-source">Assume</span></div>
+    <div class="step"><span class="step-n">3</span><div class="step-content">By Axiom I, f preserves closure.<span class="formula">InternalOp(s,f) → Closed(s) after f</span></div><span class="step-source">Ax. I</span></div>
+    <div class="step"><span class="step-n">4</span><div class="step-content">Liberation requires breaking closure.<span class="formula">Liberation(f) → ¬Closed(s) after f</span></div><span class="step-source">Def. Lib.</span></div>
+    <div class="step"><span class="step-n">5</span><div class="step-content">No internal operation can be a liberation operation.<span class="formula">InternalOp(s,f) ⟹ ¬Trans(s)</span></div><span class="step-source">3, 4</span></div>
+  </div>
+</div>
+
+<div class="proof-block">
+  <div class="proof-header"><span class="proof-label">Derivation 1B · "Escape is possible via S"</span><span class="proof-verdict pv-tension">Creates the paradox</span></div>
+  <div class="proof-steps">
+    <div class="step"><span class="step-n">1</span><div class="step-content">At each finite stage of S, s is still in C₁₂.<span class="formula">∀n: InC12(s) at step n</span></div><span class="step-source">Def. S, Ax. V</span></div>
+    <div class="step"><span class="step-n">2</span><div class="step-content">Each finite segment is a composition of internal operations, all satisfying Axiom I.<span class="formula">S_n = f₁ ∘ f₂ ∘ … ∘ fₙ, each InternalOp</span></div><span class="step-source">Ax. I applied</span></div>
+    <div class="step"><span class="step-n">3</span><div class="step-content">From Theorem I: if S completes and Align(s,A) holds, Trans(s) is achieved.<span class="formula">TraverseAll(s) ∧ Align(s,A) → Trans(s)</span></div><span class="step-source">Th. I</span></div>
+    <div class="step"><span class="step-n">4</span><div class="step-content">Applying 1A naively to S as a whole:<span class="formula">InternalOp(s,S) → ¬Trans(s)</span></div><span class="step-source">From 1A</span></div>
+    <div class="step"><span class="step-n">5</span><div class="step-content">But from Theorem I, S completing yields Trans(s).<span class="formula">InternalOp(s,S) ∧ TraverseAll(s) ∧ Align(s,A) → Trans(s)</span></div><span class="step-source">Th. I</span></div>
+  </div>
+  <div class="proof-conclusion">Steps 4 and 5 are the collision. Both follow from the axioms and they contradict each other.</div>
+</div>
+
+<div class="collision">
+  <div class="collision-header">Contradiction</div>
+  <div class="collision-body">
+    <div class="collision-line"><span class="cl-bullet">◆</span><span>From 1A: "If S is internal, it cannot liberate."<span class="cl-formula">InternalOp(s,S) ⟹ ¬Trans(s)</span></span></div>
+    <div class="collision-line"><span class="cl-bullet">◆</span><span>From 1B: "If S completes, it does liberate."<span class="cl-formula">InternalOp(s,S) ∧ TraverseAll(s) ∧ Align(s,A) ⟹ Trans(s)</span></span></div>
+  </div>
+</div>
+
+<div class="resolution-panel">
+  <div class="resolution-panel-header">Resolution 1C</div>
+  <div class="resolution-panel-body">
+    <div class="res-option">
+      <span class="res-opt-label">Option A · Distinguish Local vs. Global Internality</span>
+      <p>Introduce <span class="mono">InternalOp_local</span> and <span class="mono">TransOp</span>. Axiom I applies only to the former. S's limit state is a TransOp not in the domain of Axiom I.</p>
+      <span class="res-formula">∀n: InternalOp_local(S_n) → closure preserved
+```
+
+lim(S_n) = TransOp → not in domain of Axiom I</span>
+</div>
+<div class="res-option">
+<span class="res-opt-label">Option B · Boundary Distinction</span>
+<p>Let <span class="mono">OnBoundary(s)</span> mean s has acquired a nonzero axial coordinate. Axiom I applies only when axial coordinate = 0. Near completion, s moves to <span class="mono">OnBoundary</span> where Axiom I is silent.</p>
+</div>
+</div>
+</div>
+
+  </div>
+
+  <!-- Paradox 2 -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">II</span><h2>Monad Multiplicity Paradox — Many Spirits, One M</h2></div>
+    <p>Does "ontologically identical to M" collapse all spirits into one?</p>
+
+```
+<div class="proof-block">
+  <div class="proof-header"><span class="proof-label">Derivation 2A · "There is only one spirit"</span><span class="proof-verdict pv-tension">Creates the paradox</span></div>
+  <div class="proof-steps">
+    <div class="step"><span class="step-n">1</span><div class="step-content">Assume s₁ and s₂ are human spirits.<span class="formula">Spirit(s₁) ∧ Spirit(s₂)</span></div><span class="step-source">Assume</span></div>
+    <div class="step"><span class="step-n">2</span><div class="step-content">By Theorem IV (strict identity reading): each spirit is identical to M.<span class="formula">s₁ = M  ∧  s₂ = M</span></div><span class="step-source">Th. IV</span></div>
+    <div class="step"><span class="step-n">3</span><div class="step-content">By transitivity of identity: s₁ = s₂.<span class="formula">s₁ = M ∧ s₂ = M  ⟹  s₁ = s₂</span></div><span class="step-source">Identity</span></div>
+    <div class="step"><span class="step-n">4</span><div class="step-content">There is exactly one spirit. All individuation is apparent only. This conflicts with Prop. 1 and the entire use of C₁₂.</div><span class="step-source">3</span></div>
+  </div>
+</div>
+
+<div class="collision">
+  <div class="collision-header">Contradiction</div>
+  <div class="collision-body">
+    <div class="collision-line"><span class="cl-bullet">◆</span><span>From 2A (strict identity): all spirits are M, so not distinct.<span class="cl-formula">s₁ = s₂</span></span></div>
+    <div class="collision-line"><span class="cl-bullet">◆</span><span>From system usage (real individuation): spirits must be numerically distinct.<span class="cl-formula">s₁ ≠ s₂</span></span></div>
+  </div>
+</div>
+
+<div class="resolution-panel">
+  <div class="resolution-panel-header">Resolution 2C — Replace Identity with Grounding</div>
+  <div class="resolution-panel-body">
+    <div class="res-option">
+      <span class="res-opt-label">The Move · Introduce GroundedIn(s, M)</span>
+      <p>Drop the assertion <span class="mono">s = M</span> as numerical identity. Restate Theorem IV as:</p>
+      <span class="res-formula">∀s: Spirit(s) →
+```
+
+GroundedIn(s, M)  ∧
+PhenDistributed(s, C₁₂)</span>
+<p>This allows <span class="mono">s₁ ≠ s₂</span> while <span class="mono">GroundedIn(s₁,M)</span> and <span class="mono">GroundedIn(s₂,M)</span> both hold. M remains unique. Axiom II is preserved. Individuation is real as historical or trajective difference.</p>
+</div>
+</div>
+</div>
+
+  </div>
+
+  <!-- Remaining four paradoxes condensed -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">III–VI</span><h2>Additional Stress Tests</h2></div>
+
+```
+<div class="probe-box">
+  <div class="probe-label">Paradox 3 · Premature Alignment (False Liberation vs. Theorem I)</div>
+  <div class="probe-items">
+    <div class="probe-item"><span class="probe-dot">◆</span><span>A subject achieves orientation toward <span class="sym">A</span> (condition 3) but has not completed traversal (condition 2 fails). The biconditional says transcendence does not occur — yet the subject believes it has. Resolution: introduce <span class="mono">A_symbolic</span> vs. <span class="mono">A_effective</span>. Reserve "alignment" in Theorem I for post-traversal cases only.</span></div>
+  </div>
+</div>
+
+<div class="probe-box">
+  <div class="probe-label">Paradox 4 · Orthogonality vs. Phenomenological Continuity</div>
+  <div class="probe-items">
+    <div class="probe-item"><span class="probe-dot">◆</span><span>If full alignment with <span class="sym">A</span> implies the angular coordinate θ becomes irrelevant, Theorem II's conservation claim is undermined. Resolution: a fiber bundle model — <span class="sym">A</span> as the base space, <span class="sym">C₁₂</span> as fibers. θ remains well-defined in each fiber; the navigator's primary orientation shifts to the base axis.</span></div>
+  </div>
+</div>
+
+<div class="probe-box">
+  <div class="probe-label">Paradox 5 · Infinite Recursion vs. Final Aeon</div>
+  <div class="probe-items">
+    <div class="probe-item"><span class="probe-dot">◆</span><span>If the spirit is numerically identical to <span class="sym">M</span>, how can eternal recursion be fully real for it without compromising M's freedom? Resolution: distinguish ground-level identity from phenomenological mode. Bondage exists only at the phenomenological level. Resolution aligns with the Monad Multiplicity fix: <span class="mono">GroundedIn</span> rather than <span class="mono">=</span>.</span></div>
+  </div>
+</div>
+
+<div class="probe-box">
+  <div class="probe-label">Practical Method · How to Run These Tests</div>
+  <div class="probe-items">
+    <div class="probe-item"><span class="probe-dot">◆</span><span><strong>Formalize the relevant claims.</strong> Introduce variables for agents, states, and operations. Write axioms as logical formulas.</span></div>
+    <div class="probe-item"><span class="probe-dot">◆</span><span><strong>Try to derive both sides.</strong> Attempt a proof that leads to contradiction. Note exactly where refinement is needed.</span></div>
+    <div class="probe-item"><span class="probe-dot">◆</span><span><strong>Decide on a response strategy:</strong> weaken strong claims; introduce new distinctions; or accept productive tensions as intended dialectical features.</span></div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     BOOK I
+════════════════════════════════════════ -->
+
+<div id="book1" class="chapter">
+  <div class="chapter-banner">
+    <p class="chap-eyebrow">Book I · Formal Metaphysical Treatise</p>
+    <h2 class="chap-title">On Archetypal Closure and Axial Transcendence</h2>
+    <p class="chap-sub">Definitions, Postulates, Axioms, Propositions, Theorems, Corollaries, and Scholium</p>
+    <div class="chap-rule"></div>
+  </div>
+
+  <!-- §I Definitions -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ I</span><h2>Definitions (Refined)</h2></div>
+    <div class="def-list">
+      <div class="def-row"><span class="def-num">Def. 1</span><div class="def-body"><span class="def-term">Archetypal Field <span class="def-sym">C₁₂</span></span>A rotationally symmetric twelvefold differentiation of structured identity — the "horizontal" archetypal manifold.</div></div>
+      <div class="def-row"><span class="def-num">Def. 2</span><div class="def-body"><span class="def-term">Local Closure</span>A system is locally closed if all operations internal to <span class="sym">C₁₂</span> preserve its archetypal structure.</div></div>
+      <div class="def-row"><span class="def-num">Def. 3</span><div class="def-body"><span class="def-term">Monad <span class="def-sym">M</span></span>A dimensionless origin-point that is the metaphysical ground of all spirits, not reducible to archetypal differentiation.</div></div>
+      <div class="def-row"><span class="def-num">Def. 4</span><div class="def-body"><span class="def-term">Toroidal Recursion <span class="def-sym">T</span></span>The repetition of archetypal differentiation across temporal or experiential cycles within <span class="sym">C₁₂</span>.</div></div>
+      <div class="def-row"><span class="def-num">Def. 5</span><div class="def-body"><span class="def-term">Axial Operator <span class="def-sym">A</span></span>A transformation-type orthogonal to the symmetry of <span class="sym">C₁₂</span>, capable of recontextualizing <span class="sym">C₁₂</span> into a higher-dimensional open manifold.</div></div>
+      <div class="def-row"><span class="def-num">Def. 6</span><div class="def-body"><span class="def-term">Spiral Mediation <span class="def-sym">S</span></span>A continuous trajectory that (a) intersects all archetypal sectors of <span class="sym">C₁₂</span> and (b) asymptotically increases participation in <span class="sym">A</span>.</div></div>
+      <div class="def-row"><span class="def-num">Def. 7</span><div class="def-body"><span class="def-term">Embodiment <span class="def-sym">E</span></span>Localization of a spirit's experience within <span class="sym">C₁₂</span> under recursive conditions <span class="sym">T</span>.</div></div>
+      <div class="def-row"><span class="def-num">Def. 8</span><div class="def-body"><span class="def-term">Liberation</span>A global transformation in which a spirit's experiential manifold changes from locally closed archetypal confinement to a vertically extensible open structure via effective participation in <span class="sym">A</span>.</div></div>
+      <div class="def-row"><span class="def-num">Def. 9</span><div class="def-body"><span class="def-term">Grounded Spirit</span>A center of experience metaphysically grounded in <span class="sym">M</span> and phenomenologically individuated within <span class="sym">C₁₂</span>.</div></div>
+    </div>
+  </div>
+
+  <!-- §II Postulates -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ II</span><h2>Postulates (Clarified)</h2></div>
+    <div class="post-list">
+      <div class="post-item"><span class="post-tag">Post. 1</span><div class="post-body">Every embodied spirit is a grounded spirit: metaphysically grounded in <span class="sym">M</span> and phenomenologically located within <span class="sym">C₁₂</span>.</div></div>
+      <div class="post-item"><span class="post-tag">Post. 2</span><div class="post-body"><span class="sym">C₁₂</span> exhibits rotational symmetry of order 12 and supports toroidal recursion <span class="sym">T</span>.</div></div>
+      <div class="post-item"><span class="post-tag">Post. 3</span><div class="post-body"><span class="sym">M</span> exists prior to and independent of archetypal differentiation and sustains all grounded spirits.</div></div>
+      <div class="post-item"><span class="post-tag">Post. 4</span><div class="post-body">An axial operator <span class="sym">A</span> exists that is orthogonal, in kind, to the symmetry operations of <span class="sym">C₁₂</span>.</div></div>
+      <div class="post-item"><span class="post-tag">Post. 5</span><div class="post-body">Stable participation in <span class="sym">A</span> (liberation) for a given spirit requires mediation through <span class="sym">S</span>.</div></div>
+    </div>
+  </div>
+
+  <!-- §III Axioms -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ III</span><h2>Axioms (Revised)</h2></div>
+    <div class="axiom-list">
+      <div class="axiom-row2"><span class="ax-num2">Axiom I</span><div class="ax-body"><span class="ax-title">Local Rotational Closure</span>For any grounded spirit whose operations remain <em>strictly internal</em> to <span class="sym">C₁₂</span>, all such operations preserve local closure.</div></div>
+      <div class="axiom-row2"><span class="ax-num2">Axiom II</span><div class="ax-body"><span class="ax-title">Origin Irreducibility</span><span class="sym">M</span> cannot be derived from <span class="sym">C₁₂</span> or from any configuration of archetypal differentiation, though all grounded spirits depend on <span class="sym">M</span>.</div></div>
+      <div class="axiom-row2"><span class="ax-num2">Axiom III</span><div class="ax-body"><span class="ax-title">Recursive Persistence</span>Absent effective axial participation, <span class="sym">T</span> perpetuates indefinitely for any grounded spirit.</div></div>
+      <div class="axiom-row2"><span class="ax-num2">Axiom IV</span><div class="ax-body"><span class="ax-title">Orthogonal Axiality</span><span class="sym">A</span> is not an internal symmetry operation of <span class="sym">C₁₂</span>; it belongs to a distinct class of transformations that can change the dimensional status of a spirit's experiential manifold.</div></div>
+      <div class="axiom-row2"><span class="ax-num2">Axiom V</span><div class="ax-body"><span class="ax-title">Universal Archetypal Traversal</span>Spiral mediation <span class="sym">S</span> involves genuine engagement with each archetypal sector of <span class="sym">C₁₂</span>, integrating their potentials rather than bypassing them.</div></div>
+      <div class="axiom-row2"><span class="ax-num2">Axiom VI</span><div class="ax-body"><span class="ax-title">Distinction of Operation Levels</span>(1) <strong>Internal operations:</strong> transformations entirely within <span class="sym">C₁₂</span>, governed by Axiom I. (2) <strong>Trans-structural operations:</strong> involving effective participation in <span class="sym">A</span>, not governed by Axiom I.</div></div>
+    </div>
+  </div>
+
+  <!-- §IV Propositions -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ IV</span><h2>Propositions (Repaired)</h2></div>
+    <div class="prop-block"><div class="prop-header"><span class="prop-label">Proposition 1</span><span class="prop-title-right">Archetypal Necessity</span></div><div class="prop-body"><p>No phenomenological individuation of a grounded spirit occurs without differentiation across <span class="sym">C₁₂</span>.</p></div><div class="proof-section-inner"><div class="proof-header-inner">Proof</div><div class="proof-text"><p>Individuation presupposes distinction. Distinction presupposes multiplicity of archetypal modes. <span class="sym">C₁₂</span> supplies these modes. <span class="qed">∎</span></p></div></div></div>
+    <div class="prop-block"><div class="prop-header"><span class="prop-label">Proposition 2</span><span class="prop-title-right">Impossibility of Purely Horizontal Escape</span></div><div class="prop-body"><p>No operation strictly internal to <span class="sym">C₁₂</span> generates liberation.</p></div><div class="proof-section-inner"><div class="proof-header-inner">Proof</div><div class="proof-text"><p>By Axiom I, internal operations preserve local closure. Liberation (Def. 8) requires a change of manifold type. Hence no purely internal operation can produce liberation. <span class="qed">∎</span></p></div></div></div>
+    <div class="prop-block"><div class="prop-header"><span class="prop-label">Proposition 3</span><span class="prop-title-right">Axial Possibility</span></div><div class="prop-body"><p>If a grounded spirit participates effectively in <span class="sym">A</span>, then local closure can be transcended.</p></div><div class="proof-section-inner"><div class="proof-header-inner">Proof</div><div class="proof-text"><p>By Axiom IV and VI, effective participation in <span class="sym">A</span> is a trans-structural operation not subject to Axiom I's closure-preservation. Def. 8 states liberation is precisely such a trans-structural operation. <span class="qed">∎</span></p></div></div></div>
+    <div class="prop-block"><div class="prop-header"><span class="prop-label">Proposition 4</span><span class="prop-title-right">Spiral Requirement</span></div><div class="prop-body"><p>Attempted immediate identification with <span class="sym">A</span> without archetypal traversal destabilizes identity coherence.</p></div><div class="proof-section-inner"><div class="proof-header-inner">Proof (Sketch)</div><div class="proof-text"><p>Unintegrated archetypal content produces dissociation rather than stable reorientation (Axiom V). Hence spiral mediation is required for coherent participation in <span class="sym">A</span>. <span class="qed">∎</span></p></div></div></div>
+    <div class="prop-block"><div class="prop-header"><span class="prop-label">Proposition 5</span><span class="prop-title-right">Final Aeonic Condition</span></div><div class="prop-body"><p>When <span class="sym">S</span> completes and effective axial participation stabilizes, <span class="sym">T</span> ceases to be a governing condition.</p></div><div class="proof-section-inner"><div class="proof-header-inner">Proof</div><div class="proof-text"><p>By Axiom III, <span class="sym">T</span> persists absent axial participation. When <span class="sym">S</span> completes, the spirit integrates all sectors and establishes effective participation in <span class="sym">A</span> (Post. 5). By Def. 8, liberation changes manifold type so <span class="sym">T</span> no longer confines. <span class="qed">∎</span></p></div></div></div>
+  </div>
+
+  <!-- §V Theorems -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ V</span><h2>Major Theorems (Recast)</h2></div>
+    <div class="prop-block is-theorem"><div class="prop-header"><span class="prop-label">Theorem I</span><span class="prop-title-right">Conditional Transcendence</span></div><div class="prop-body"><p>Liberation occurs iff: (1) M remains primary; (2) spirit has traversed all sectors via <span class="sym">S</span>; (3) trans-structural reorientation involves effective participation in <span class="sym">A</span>. When all three hold jointly, liberation does occur.</p></div><div class="proof-section-inner"><div class="proof-header-inner">Proof (Outline)</div><div class="proof-text"><p><strong>(→)</strong> If liberated, by Def. 8 the spirit participates effectively in <span class="sym">A</span> (3), remains dependent on <span class="sym">M</span> (1) by Post. 1 and Ax. II, and by Post. 5 requires spiral traversal (2). <strong>(←)</strong> If (1)–(3) hold, manifold type shifts from locally closed to vertically extensible via <span class="sym">A</span>. <span class="qed">∎</span></p></div></div></div>
+    <div class="prop-block is-theorem"><div class="prop-header"><span class="prop-label">Theorem II</span><span class="prop-title-right">Conservation and Recontextualization</span></div><div class="prop-body"><p>Under liberation, archetypal differentiation in <span class="sym">C₁₂</span> is not annihilated but recontextualized as a sub-structure within a higher-dimensional manifold.</p></div><div class="proof-section-inner"><div class="proof-header-inner">Proof</div><div class="proof-text"><p>Liberation involves manifold-type change via <span class="sym">A</span> but does not require deletion of archetypal content (Ax. V ensures integration, not rejection). <span class="sym">C₁₂</span> persists as an internal structure within the larger open manifold. <span class="qed">∎</span></p></div></div></div>
+    <div class="prop-block is-theorem"><div class="prop-header"><span class="prop-label">Theorem III</span><span class="prop-title-right">Dimensional Upgrade</span></div><div class="prop-body"><p>Effective participation in <span class="sym">A</span> transforms a closed rotational manifold into an open higher-dimensional manifold.</p></div></div>
+    <div class="prop-block is-theorem"><div class="prop-header"><span class="prop-label">Theorem IV</span><span class="prop-title-right">Ground-Phenomenology Duality</span></div><div class="prop-body"><p>For any grounded spirit s: (1) s is metaphysically grounded in <span class="sym">M</span>; (2) s is phenomenologically individuated across <span class="sym">C₁₂</span> and, under liberation, beyond it.</p></div><div class="proof-section-inner"><div class="proof-header-inner">Proof</div><div class="proof-text"><p>(1) from Def. 9, Post. 1, Ax. II: spirits depend on but are not numerically identical to <span class="sym">M</span>. (2) from Def. 7 and Prop. 1: individuation arises through differentiation across <span class="sym">C₁₂</span>, extended under liberation to encompass dimensions opened by <span class="sym">A</span>. <span class="qed">∎</span></p></div></div></div>
+  </div>
+
+  <!-- §VI Corollaries -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ VI–VII</span><h2>Corollaries and Scholium</h2></div>
+    <div class="cor-list">
+      <div class="cor-item"><span class="cor-tag">Cor. 1</span><div class="cor-body"><span class="cor-title">Infinite Recursion in the Absence of A</span>For a grounded spirit with no effective participation in <span class="sym">A</span>, <span class="sym">T</span> governs experiential cycles indefinitely.</div></div>
+      <div class="cor-item"><span class="cor-tag">Cor. 2</span><div class="cor-body"><span class="cor-title">False Liberation (Symbolic Axiality)</span>Conceptual identification with <span class="sym">A</span> without integration of all <span class="sym">C₁₂</span> sectors yields symbolic or dissociative abstraction rather than liberation.</div></div>
+      <div class="cor-item"><span class="cor-tag">Cor. 3</span><div class="cor-body"><span class="cor-title">Structural Humility</span>The closure of <span class="sym">C₁₂</span> is functionally real for embodied spirits but not metaphysically ultimate; it is a sub-structure within a larger space grounded in <span class="sym">M</span> and open to <span class="sym">A</span>.</div></div>
+    </div>
+    <div class="scholium-panel">
+      <div class="scholium-label">Scholium · Five Clarifications</div>
+      <div class="scholium-items">
+        <div class="scholium-item"><span class="s-num">1</span><span>The cosmos of embodied experience (<span class="sym">C₁₂</span> under <span class="sym">T</span>) is locally complete yet open to higher-dimensional recontextualization via <span class="sym">A</span>.</span></div>
+        <div class="scholium-item"><span class="s-num">2</span><span>Archetypes govern phenomenological individuation without constituting the ultimate ground (<span class="sym">M</span>), which remains irreducible and common to all spirits.</span></div>
+        <div class="scholium-item"><span class="s-num">3</span><span>The "13th principle" (<span class="sym">A</span>) is not merely another archetype but a trans-structural transformation-type orthogonal to archetypal symmetry.</span></div>
+        <div class="scholium-item"><span class="s-num">4</span><span>Liberation is not a horizontal escape but a shift in operation-level: from internal operations that preserve closure to axial operations that alter manifold type.</span></div>
+        <div class="scholium-item"><span class="s-num">5</span><span>The Final Aeonic condition is a topological and operational transformation in which spirits remain grounded in <span class="sym">M</span>, retain archetypal integration, and inhabit an open manifold of vertically extensible consciousness.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     BOOK II
+════════════════════════════════════════ -->
+
+<div id="book2" class="chapter">
+  <div class="chapter-banner">
+    <p class="chap-eyebrow">Book II · Ethics</p>
+    <h2 class="chap-title">On Cosmological Ethics</h2>
+    <p class="chap-sub">Derived from the structural roles of M, C₁₂, A, S, and T as established in Book I</p>
+    <div class="chap-rule"></div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ I</span><h2>Fundamental Ethical Orientation</h2></div>
+    <div class="def-list">
+      <div class="def-row"><span class="def-num">Def. 1</span><div class="def-body"><span class="def-term">Ground-Responsibility</span>A grounded spirit bears responsibility to express its origin in <span class="sym">M</span> faithfully through its conduct within <span class="sym">C₁₂</span>.</div></div>
+      <div class="def-row"><span class="def-num">Def. 2</span><div class="def-body"><span class="def-term">Archetypal Integrity</span>Acting such that each archetypal sector of <span class="sym">C₁₂</span> can manifest its healthy potential without being suppressed, inflated, or weaponized.</div></div>
+      <div class="def-row"><span class="def-num">Def. 3</span><div class="def-body"><span class="def-term">Axial Orientation</span>A stable, non-dissociative disposition toward <span class="sym">A</span>, expressed as a preference for depth, truth, and vertical extensibility over repetition of mere patterns.</div></div>
+      <div class="def-row"><span class="def-num">Def. 4</span><div class="def-body"><span class="def-term">Spiral Conduct</span>A pattern of life in which a spirit cyclically encounters all archetypal sectors (<span class="sym">T</span>) while progressively integrating them (<span class="sym">S</span>) under orientation toward <span class="sym">A</span>.</div></div>
+    </div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ II</span><h2>Ethical Postulates</h2></div>
+    <div class="post-list">
+      <div class="post-item"><span class="post-tag">Post. E1</span><div class="post-body"><span class="post-title">Expressive Fidelity</span>Ethical life is the attempt of a grounded spirit to make its actions coherent with its monadic ground (<span class="sym">M</span>) under the conditions of archetypal differentiation.</div></div>
+      <div class="post-item"><span class="post-tag">Post. E2</span><div class="post-body"><span class="post-title">Archetypal Stewardship</span>A grounded spirit is a steward of <span class="sym">C₁₂</span>: it does not own archetypes but participates in them and is accountable for how it channels them.</div></div>
+      <div class="post-item"><span class="post-tag">Post. E3</span><div class="post-body"><span class="post-title">Axial Priority</span>When there is conflict between mere repetition (<span class="sym">T</span>) and axial growth, it is ethically preferable to choose growth, provided identity coherence is preserved.</div></div>
+      <div class="post-item"><span class="post-tag">Post. E4</span><div class="post-body"><span class="post-title">Spiral Universality</span>No archetypal sector is ethically negligible; every sector contributes something essential to the full maturation of a grounded spirit.</div></div>
+      <div class="post-item"><span class="post-tag">Post. E5</span><div class="post-body"><span class="post-title">Non-bypass Principle</span>Attempts to reach axial states by bypassing archetypal integration are ethically defective, producing harm through dissociation and unintegrated shadow.</div></div>
+    </div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ III</span><h2>Ethical Axioms</h2></div>
+    <div class="axiom-list">
+      <div class="axiom-row2"><span class="ax-num2">Axiom E1</span><div class="ax-body"><span class="ax-title">Ground Alignment</span>An action is ethically sound only if it can, in principle, be affirmed from the standpoint of a spirit aware of its grounding in <span class="sym">M</span>.</div></div>
+      <div class="axiom-row2"><span class="ax-num2">Axiom E2</span><div class="ax-body"><span class="ax-title">Archetypal Non-Exclusion</span>Ethical development does not permanently exclude any sector of <span class="sym">C₁₂</span>; it seeks to integrate even difficult or shadow aspects constructively.</div></div>
+      <div class="axiom-row2"><span class="ax-num2">Axiom E3</span><div class="ax-body"><span class="ax-title">Recursion Discernment</span>A grounded spirit must discern whether a pattern is a necessary spiral recurrence (supporting <span class="sym">S</span>) or a stagnant loop of <span class="sym">T</span> that blocks axial orientation.</div></div>
+      <div class="axiom-row2"><span class="ax-num2">Axiom E4</span><div class="ax-body"><span class="ax-title">Axial Humility</span>Axial orientation toward <span class="sym">A</span> must be accompanied by acknowledgment of ongoing archetypal work; claims of final transcendence are suspect while unintegrated content remains.</div></div>
+      <div class="axiom-row2"><span class="ax-num2">Axiom E5</span><div class="ax-body"><span class="ax-title">Relational Coherence</span>Because multiple grounded spirits share the same monadic ground <span class="sym">M</span> while individuated in <span class="sym">C₁₂</span>, ethical conduct must respect others as expressions of the same ground under different archetypal distributions.</div></div>
+    </div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ IV</span><h2>Propositions of Practice</h2></div>
+    <div class="prop-block"><div class="prop-header"><span class="prop-label">Prop. E1</span><span class="prop-title-right">Duty of Archetypal Integration</span></div><div class="prop-body"><p>A grounded spirit has an ethical duty to engage each archetypal sector of <span class="sym">C₁₂</span> consciously rather than unconsciously acting out or repressing them. <span class="qed">∎</span></p></div></div>
+    <div class="prop-block"><div class="prop-header"><span class="prop-label">Prop. E2</span><span class="prop-title-right">Impermissibility of Pure Bypass</span></div><div class="prop-body"><p>Bypass attempts — seeking <span class="sym">A</span> while denying <span class="sym">C₁₂</span> — are ethically defective modes of axial orientation. <span class="qed">∎</span></p></div></div>
+    <div class="prop-block"><div class="prop-header"><span class="prop-label">Prop. E3</span><span class="prop-title-right">Recursion as Curriculum</span></div><div class="prop-body"><p>Recurrent patterns (<span class="sym">T</span>) are to be treated ethically as curriculum rather than punishment or mere fate. <span class="qed">∎</span></p></div></div>
+    <div class="prop-block"><div class="prop-header"><span class="prop-label">Prop. E4</span><span class="prop-title-right">Axial Compassion</span></div><div class="prop-body"><p>Axial orientation toward <span class="sym">A</span> naturally expresses as compassion toward other spirits. <span class="qed">∎</span></p></div></div>
+    <div class="prop-block"><div class="prop-header"><span class="prop-label">Prop. E5</span><span class="prop-title-right">Hierarchy of Goods</span></div><div class="prop-body"><p>An ordering of ethical goods: (1) survival and stability within <span class="sym">T</span>; (2) balanced archetypal expression in <span class="sym">C₁₂</span>; (3) axial deepening and liberation. <span class="qed">∎</span></p></div></div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ V</span><h2>Major Ethical Theorems</h2></div>
+    <div class="prop-block is-theorem"><div class="prop-header"><span class="prop-label">Theorem E1</span><span class="prop-title-right">Ethic of Spiral Wholeness</span></div><div class="prop-body"><p>Ethical life for a grounded spirit is the pursuit of spiral wholeness: continually returning to <span class="sym">C₁₂</span>'s multiplicity (<span class="sym">T</span>) while integrating it (<span class="sym">S</span>) in service of axial participation (<span class="sym">A</span>) under the guidance of ground-awareness (<span class="sym">M</span>). <span class="qed">∎</span></p></div></div>
+    <div class="prop-block is-theorem"><div class="prop-header"><span class="prop-label">Theorem E2</span><span class="prop-title-right">Triadic Ethical Balance</span></div><div class="prop-body"><p>At any given time, a grounded spirit must balance: (1) stabilization within <span class="sym">T</span>; (2) integration within <span class="sym">C₁₂</span>; (3) orientation toward <span class="sym">A</span>. <span class="qed">∎</span></p></div><div class="proof-section-inner"><div class="proof-header-inner">Note on Derivation</div><div class="proof-text"><p>Neglecting any level produces a recognizable defect corresponding to the three corollaries of Book I: stagnant recursion (Cor. 1), dissociation (Cor. 2), or archetypal imbalance.</p></div></div></div>
+    <div class="prop-block is-theorem"><div class="prop-header"><span class="prop-label">Theorem E3</span><span class="prop-title-right">Non-violence of Ground</span></div><div class="prop-body"><p>To deliberately harm another grounded spirit as if it were ontologically separate from one's own ground is an ethical contradiction. <span class="qed">∎</span></p></div><div class="proof-section-inner"><div class="proof-header-inner">Proof (Sketch)</div><div class="proof-text"><p>By Axiom E5, all grounded spirits share <span class="sym">M</span>. To harm another as if separate is to act from a false premise — ontological separateness — that cannot be affirmed from M-awareness (Axiom E1). <span class="qed">∎</span></p></div></div></div>
+    <div class="prop-block is-theorem"><div class="prop-header"><span class="prop-label">Theorem E4</span><span class="prop-title-right">Transparency Criterion</span></div><div class="prop-body"><p>An action is ethically superior when it can be brought into transparent awareness at all three levels: as an archetypal expression, as a recursive pattern, and as a contribution to axial orientation. <span class="qed">∎</span></p></div></div>
+    <div class="prop-block is-theorem"><div class="prop-header"><span class="prop-label">Theorem E5</span><span class="prop-title-right">Gentle Ascent</span></div><div class="prop-body"><p>The most stable axial progress is <em>gentle ascent</em>: small, recursive adjustments in each archetypal sector rather than violent rupture with <span class="sym">C₁₂</span>. <span class="qed">∎</span></p></div><div class="proof-section-inner"><div class="proof-header-inner">Proof (Sketch)</div><div class="proof-text"><p>Attempted rupture with <span class="sym">C₁₂</span> fails Prop. 4 (Book I) — producing dissociation. Gentle sector-by-sector integration realizes <span class="sym">S</span> progressively, satisfying Axiom V. Violent rupture cannot satisfy Theorem I's traversal condition. <span class="qed">∎</span></p></div></div></div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ VI</span><h2>Corollaries and Scholium</h2></div>
+    <div class="cor-list">
+      <div class="cor-item"><span class="cor-tag">Cor. E1</span><div class="cor-body"><span class="cor-title">Ethical Reading of Crises</span>Crises often signal archetypal sectors demanding integration — to be read not merely as misfortune but as the system's demand for spiral engagement.</div></div>
+      <div class="cor-item"><span class="cor-tag">Cor. E2</span><div class="cor-body"><span class="cor-title">Community as Shared Spiral</span>Ethical community life is mutual support among many grounded spirits as they move through their spirals, each offering differentiated archetypal experience while sharing common ground in <span class="sym">M</span>.</div></div>
+      <div class="cor-item"><span class="cor-tag">Cor. E3</span><div class="cor-body"><span class="cor-title">Humility of the Incomplete Spiral</span>No non-liberated spirit can claim final ethical authority; discourse must be grounded in humility, acknowledging that untraversed sectors may still distort perspective.</div></div>
+    </div>
+    <div class="scholium-text-panel">
+      <span style="font-family:'Cinzel',serif;font-size:0.63rem;letter-spacing:0.3em;color:rgba(201,168,76,0.42);text-transform:uppercase;margin-bottom:16px;display:block;">Scholium</span>
+      <p class="scholium-text">A good life is centered in <span class="sym">M</span>, wide in <span class="sym">C₁₂</span>, patient in <span class="sym">T</span>, inclined toward <span class="sym">A</span>, and spiral in <span class="sym">S</span>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     DOCUMENT 3 — ZODIACAL OVERLAY
+════════════════════════════════════════ -->
+
+<div id="doc3" class="chapter">
+  <div class="chapter-banner">
+    <p class="chap-eyebrow">Document 3 · Applied Instrument</p>
+    <h2 class="chap-title">Zodiacal Overlay & Spiral Journal System</h2>
+    <p class="chap-sub">The experiential layer of C₁₂ — a diagnostic instrument for daily and weekly spiral integration</p>
+    <div class="chap-rule"></div>
+  </div>
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ I</span><h2>Zodiacal Overlay of C₁₂</h2></div>
+    <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:0.91rem;color:var(--ash);margin-bottom:22px;line-height:1.68;">Each sector carries a virtue (its healthy potential) and a pair of characteristic vices — excess and defect. Element accent bars: <span style="color:rgba(191,90,50,0.8)">▬</span> fire &nbsp;<span style="color:rgba(100,140,80,0.8)">▬</span> earth &nbsp;<span style="color:rgba(120,155,200,0.8)">▬</span> air &nbsp;<span style="color:rgba(70,100,170,0.8)">▬</span> water</p>
+
+```
+<div class="sign-grid">
+  <div class="sign-card fire"><div class="sign-name">Aries</div><div class="sign-sector">Sector of Initiation</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Courage</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Aggression</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Cowardice</span></div></div></div>
+  <div class="sign-card earth"><div class="sign-name">Taurus</div><div class="sign-sector">Sector of Stabilization</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Steadfastness</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Stagnation</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Instability</span></div></div></div>
+  <div class="sign-card air"><div class="sign-name">Gemini</div><div class="sign-sector">Sector of Exchange</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Clarity</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Manipulation</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Withholding</span></div></div></div>
+  <div class="sign-card water"><div class="sign-name">Cancer</div><div class="sign-sector">Sector of Belonging</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Nurturance</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Enmeshment</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Rootlessness</span></div></div></div>
+  <div class="sign-card fire"><div class="sign-name">Leo</div><div class="sign-sector">Sector of Radiance</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Generosity</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Narcissism</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Self-erasure</span></div></div></div>
+  <div class="sign-card earth"><div class="sign-name">Virgo</div><div class="sign-sector">Sector of Service</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Devotion</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Perfectionism</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Negligence</span></div></div></div>
+  <div class="sign-card air"><div class="sign-name">Libra</div><div class="sign-sector">Sector of Reciprocity</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Fairness</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">People-pleasing</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Exploitation</span></div></div></div>
+  <div class="sign-card water"><div class="sign-name">Scorpio</div><div class="sign-sector">Sector of Depth</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Shadow honesty</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Obsession</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Avoidance</span></div></div></div>
+  <div class="sign-card fire"><div class="sign-name">Sagittarius</div><div class="sign-sector">Sector of Vision</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Wisdom-seeking</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Dogmatism</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Cynicism</span></div></div></div>
+  <div class="sign-card earth"><div class="sign-name">Capricorn</div><div class="sign-sector">Sector of Structure</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Integrity</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Authoritarianism</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Irresponsibility</span></div></div></div>
+  <div class="sign-card air"><div class="sign-name">Aquarius</div><div class="sign-sector">Sector of Innovation</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Liberating insight</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Chaos-for-chaos</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Conformity</span></div></div></div>
+  <div class="sign-card water"><div class="sign-name">Pisces</div><div class="sign-sector">Sector of Surrender</div><span class="sign-virtue-label">Virtue</span><span class="sign-virtue">Mercy</span><div class="sign-vices"><div class="vice-row"><span class="vice-tag excess">Excess</span><span class="vice-name">Self-dissolution</span></div><div class="vice-row"><span class="vice-tag defect">Defect</span><span class="vice-name">Hard-heartedness</span></div></div></div>
+</div>
+```
+
+  </div>
+
+  <!-- Daily Dashboard -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ II</span><h2>Spiral Journal — Daily Dashboard</h2></div>
+    <div class="orientation-strip">
+      <div class="orient-row"><span class="orient-sym">M · Ground</span><span class="orient-text">I am grounded in a monadic origin beyond archetypal roles.</span></div>
+      <div class="orient-row"><span class="orient-sym">C₁₂ · Field</span><span class="orient-text">I move through 12 archetypal modes as curriculum, not prison.</span></div>
+      <div class="orient-row"><span class="orient-sym">T · Recursion</span><span class="orient-text">Repetition is a teacher.</span></div>
+      <div class="orient-row"><span class="orient-sym">S · Spiral</span><span class="orient-text">I revisit old places from a higher vantage.</span></div>
+      <div class="orient-row"><span class="orient-sym">A · Axis</span><span class="orient-text">I orient toward vertical openness and liberation.</span></div>
+    </div>
+
+```
+<div class="dashboard">
+  <div class="dashboard-header"><span class="dash-title">12-Sign Overview Grid</span><span class="date-field">Date: ___________________________</span></div>
+  <div style="overflow-x:auto;">
+    <table class="dash-table">
+      <thead><tr><th>Sign</th><th>Sector</th><th>Virtue</th><th>Vices (excess / defect)</th><th>Today</th></tr></thead>
+      <tbody>
+        <tr><td class="col-sign">Aries</td><td class="col-sector">Initiation</td><td class="col-virtue">Courage</td><td class="col-vices">Aggression / Cowardice</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Taurus</td><td class="col-sector">Stabilization</td><td class="col-virtue">Steadfastness</td><td class="col-vices">Stagnation / Instability</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Gemini</td><td class="col-sector">Exchange</td><td class="col-virtue">Clarity</td><td class="col-vices">Manipulation / Withholding</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Cancer</td><td class="col-sector">Belonging</td><td class="col-virtue">Nurturance</td><td class="col-vices">Enmeshment / Rootlessness</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Leo</td><td class="col-sector">Radiance</td><td class="col-virtue">Generosity</td><td class="col-vices">Narcissism / Self-erasure</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Virgo</td><td class="col-sector">Service</td><td class="col-virtue">Devotion</td><td class="col-vices">Perfectionism / Negligence</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Libra</td><td class="col-sector">Reciprocity</td><td class="col-virtue">Fairness</td><td class="col-vices">People-pleasing / Exploitation</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Scorpio</td><td class="col-sector">Depth</td><td class="col-virtue">Shadow honesty</td><td class="col-vices">Obsession / Avoidance</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Sagittarius</td><td class="col-sector">Vision</td><td class="col-virtue">Wisdom-seeking</td><td class="col-vices">Dogmatism / Cynicism</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Capricorn</td><td class="col-sector">Structure</td><td class="col-virtue">Integrity</td><td class="col-vices">Authoritarianism / Irresponsibility</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Aquarius</td><td class="col-sector">Innovation</td><td class="col-virtue">Liberating insight</td><td class="col-vices">Chaos / Conformity</td><td class="col-today"><span class="write-line"></span></td></tr>
+        <tr><td class="col-sign">Pisces</td><td class="col-sector">Surrender</td><td class="col-virtue">Mercy</td><td class="col-vices">Self-dissolution / Hard-heartedness</td><td class="col-today"><span class="write-line"></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="section-head-inner">Daily Micro-Checklist</div>
+  <div class="checklist">
+    <div class="check-item"><span class="check-box"></span><span><strong>Ground (M):</strong> 2–5 minutes of simple being, no roles.</span></div>
+    <div class="check-item"><span class="check-box"></span><span><strong>Body / Structure (Taurus / Capricorn):</strong> one concrete act of care or order.</span></div>
+    <div class="check-item"><span class="check-box"></span><span><strong>Shadow glance (Scorpio):</strong> one uncomfortable truth named.</span></div>
+    <div class="check-item"><span class="check-box"></span><span><strong>Compassion (Pisces / Libra):</strong> one act of mercy or fairness.</span></div>
+    <div class="check-item"><span class="check-box"></span><span><strong>Spiral move (any sign):</strong> one 1% behavior shift toward integration.</span></div>
+    <div class="check-item"><span class="check-box"></span><span><strong>Axial pause (A):</strong> 30–60 seconds sensing vertical or inward openness.</span></div>
+  </div>
+  <div class="section-head-inner">T – S – A Reflection</div>
+  <div class="reflection-block">
+    <div class="reflect-item"><div class="reflect-q"><span class="reflect-sym">T · Recursion</span><span>What repeated today?</span></div><span class="write-line-long"></span><span class="write-line-long"></span></div>
+    <div class="reflect-item"><div class="reflect-q"><span class="reflect-sym">S · Spiral</span><span>Did I respond any differently this time?</span></div><span class="write-line-long"></span><span class="write-line-long"></span></div>
+    <div class="reflect-item"><div class="reflect-q"><span class="reflect-sym">A · Axis</span><span>Did anything hint at a larger, vertical perspective?</span></div><span class="write-line-long"></span><span class="write-line-long"></span></div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- Weekly Workbook -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">§ III</span><h2>12-Week Spiral Workbook — Weekly Page</h2></div>
+    <div class="workbook">
+      <div class="wb-header"><span class="wb-title">Weekly Spiral Page</span><span class="wb-meta">One sign · One week · One integration</span></div>
+      <div class="wb-fields">
+        <div class="wb-field"><span class="wb-field-label">Week #</span><span class="wb-line"></span></div>
+        <div class="wb-field"><span class="wb-field-label">Sign / Sector</span><span class="wb-line"></span></div>
+        <div class="wb-field"><span class="wb-field-label">Dates</span><span class="wb-line"></span></div>
+        <div class="wb-field"><span class="wb-field-label">Virtue Focus</span><span class="wb-line"></span></div>
+      </div>
+      <div class="wb-part"><div class="wb-part-title">Part 1 · Opening</div><div class="wb-prompt"><div class="wb-prompt-item"><span class="wb-prompt-q">Current pattern in this sign — loops, struggles, recurring themes:</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div><div class="wb-prompt-item"><span class="wb-prompt-q">Concrete intention for this week:</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div></div></div>
+      <div class="wb-part"><div class="wb-part-title">Part 2 · Mid-Week Notes (Days 2–5)</div><div class="wb-prompt"><div class="wb-prompt-item"><span class="wb-prompt-q">How this sign's energy showed up in real life:</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div><div class="wb-prompt-item"><span class="wb-prompt-q">Virtue moments — wins:</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div><div class="wb-prompt-item"><span class="wb-prompt-q">Vices noticed (excess / defect):</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div><div class="wb-prompt-item"><span class="wb-prompt-q">One small adjustment I can try tomorrow:</span><span class="wb-line-sm"></span></div></div></div>
+      <div class="wb-part"><div class="wb-part-title">Part 3 · Shadow &amp; Recursion (Day 6)</div><div class="wb-prompt"><div class="wb-prompt-item"><span class="wb-prompt-q">Recurring loop in this sign — describe:</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div><div class="wb-prompt-item"><span class="wb-prompt-q">What might this loop be trying to teach me?</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div><div class="wb-prompt-item"><span class="wb-prompt-q">If I treated this as curriculum instead of fate, what would I do differently?</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div></div></div>
+      <div class="wb-part"><div class="wb-part-title">Part 4 · Integration &amp; Axial Alignment (Day 7)</div><div class="wb-prompt"><div class="wb-prompt-item"><span class="wb-prompt-q">What actually shifted this week?</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div><div class="wb-prompt-item"><span class="wb-prompt-q">How did this sign help my spiral (S) rather than just my repetition (T)?</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div><div class="wb-prompt-item"><span class="wb-prompt-q">How might this sign serve my axial orientation (A) going forward?</span><span class="wb-line-sm"></span><span class="wb-line-sm"></span></div><div class="wb-prompt-item"><span class="wb-prompt-q">One sentence intention as I move to the next sign:</span><span class="wb-line-sm"></span><span class="wb-line-lg"></span></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     BACK MATTER
+════════════════════════════════════════ -->
+
+<div id="backmatter" class="chapter">
+  <div class="chapter-banner">
+    <p class="chap-eyebrow">Back Matter · Apparatus</p>
+    <h2 class="chap-title">Copyright, Contents, Glossary & References</h2>
+    <p class="chap-sub">Complete scholarly apparatus for the unified edition</p>
+    <div class="chap-rule"></div>
+  </div>
+
+  <!-- Copyright -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">Copyright</span><h2>Copyright Page</h2></div>
+    <div class="copyright-block">
+      <div class="cp-title">The Emanatory Schema</div>
+      <div class="cp-subtitle">A Complete Formal Metaphysics in Three Documents</div>
+      <div class="cp-rule"></div>
+      <p class="cp-notice"><em>Book I: On Archetypal Closure and Axial Transcendence</em><br><em>Book II: On Cosmological Ethics</em><br><em>Document 3: Zodiacal Overlay and Spiral Journal System</em></p>
+      <p class="cp-rights">All rights reserved</p>
+      <p class="cp-notice">No part of this work may be reproduced, transmitted, or distributed in any form or by any means without the prior written permission of the author, except in the case of brief quotations embodied in critical reviews and certain other non-commercial uses permitted by applicable copyright law.</p>
+      <div class="cp-isbn-block"><span class="cp-isbn-label">First Edition</span><span class="cp-isbn">ISBN: [to be assigned]</span></div>
+      <p class="cp-notice">The formal notation, structural operators (<span class="sym">M</span>, <span class="sym">C₁₂</span>, <span class="sym">A</span>, <span class="sym">S</span>, <span class="sym">T</span>, <span class="sym">E</span>), and the term <em>Grounded Spirit</em> as used in this work are original conceptual formulations of the author.</p>
+      <p class="cp-edition">Set in Cormorant Garamond, Cinzel, and JetBrains Mono.</p>
+    </div>
+  </div>
+
+  <!-- TOC -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">Contents</span><h2>Table of Contents</h2></div>
+    <div class="toc-block">
+      <div class="toc-part">
+        <div class="toc-part-label">Prefatory Material</div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-name">Copyright Page</span></div><div class="toc-dot"></div><span class="toc-page">ii</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-name">Table of Contents</span></div><div class="toc-dot"></div><span class="toc-page">iii</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-name">The Source-Fire: A Generative Preface</span></div><div class="toc-dot"></div><span class="toc-page">v</span></div>
+      </div>
+      <div class="toc-part">
+        <div class="toc-part-label">Critical Apparatus</div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-name">Formal Analysis: On the Logical Status of the Schema</span></div><div class="toc-dot"></div><span class="toc-page">1</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-name">Paradox Tests & Derived Contradictions</span></div><div class="toc-dot"></div><span class="toc-page">11</span></div>
+      </div>
+      <div class="toc-part">
+        <div class="toc-part-label">Book I — On Archetypal Closure and Axial Transcendence</div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">I</span><span class="toc-name-main">Definitions (Refined) — Defs. 1–9</span></div><div class="toc-dot"></div><span class="toc-page">27</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">II</span><span class="toc-name-main">Postulates (Clarified) — Post. 1–5</span></div><div class="toc-dot"></div><span class="toc-page">31</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">III</span><span class="toc-name-main">Axioms (Revised) — Ax. I–VI</span></div><div class="toc-dot"></div><span class="toc-page">33</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">IV</span><span class="toc-name-main">Propositions — Props. 1–5</span></div><div class="toc-dot"></div><span class="toc-page">37</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">V</span><span class="toc-name-main">Major Theorems — Ths. I–IV</span></div><div class="toc-dot"></div><span class="toc-page">43</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">VI–VII</span><span class="toc-name-main">Corollaries and Scholium</span></div><div class="toc-dot"></div><span class="toc-page">51</span></div>
+      </div>
+      <div class="toc-part">
+        <div class="toc-part-label">Book II — On Cosmological Ethics</div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">I</span><span class="toc-name-main">Fundamental Ethical Orientation — Defs. 1–4</span></div><div class="toc-dot"></div><span class="toc-page">57</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">II–III</span><span class="toc-name-main">Ethical Postulates & Axioms</span></div><div class="toc-dot"></div><span class="toc-page">59</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">IV</span><span class="toc-name-main">Propositions of Practice — Props. E1–E5</span></div><div class="toc-dot"></div><span class="toc-page">65</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">V</span><span class="toc-name-main">Major Ethical Theorems — Ths. E1–E5</span></div><div class="toc-dot"></div><span class="toc-page">69</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">VI</span><span class="toc-name-main">Corollaries and Scholium</span></div><div class="toc-dot"></div><span class="toc-page">77</span></div>
+      </div>
+      <div class="toc-part">
+        <div class="toc-part-label">Document 3 — Zodiacal Overlay & Spiral Journal</div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">I</span><span class="toc-name-main">Zodiacal Overlay of C₁₂ — Aries through Pisces</span></div><div class="toc-dot"></div><span class="toc-page">83</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">II</span><span class="toc-name-main">Spiral Journal — Daily Dashboard</span></div><div class="toc-dot"></div><span class="toc-page">89</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-num">III</span><span class="toc-name-main">12-Week Spiral Workbook — Weekly Page</span></div><div class="toc-dot"></div><span class="toc-page">93</span></div>
+      </div>
+      <div class="toc-part">
+        <div class="toc-part-label">Back Matter</div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-name">Glossary of Operators and Terms</span></div><div class="toc-dot"></div><span class="toc-page">99</span></div>
+        <div class="toc-entry"><div class="toc-title"><span class="toc-name">References and Source Materials</span></div><div class="toc-dot"></div><span class="toc-page">105</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Glossary -->
+
+  <div class="book-section">
+    <div class="section-head"><span class="sec-roman">Glossary</span><h2>Glossary of Operators and Terms</h2></div>
+    <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:0.91rem;color:var(--ash);margin-bottom:22px;line-height:1.68;">Entries are listed in order of structural priority within the system, beginning with the primitive operators and proceeding to derived and applied terms.</p>
+    <div class="gloss-list">
+      <div class="gloss-entry"><span class="gloss-term"><span class="gloss-sym">M</span> Monad</span><div class="gloss-def">The dimensionless metaphysical origin-point of all grounded spirits. Not derivable from archetypal differentiation (Axiom II, Book I). Sustains all spirits without being numerically identical to any of them.<span class="gloss-cross">See: Grounded Spirit, Origin Irreducibility, Ground-Responsibility</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term"><span class="gloss-sym">C₁₂</span> Archetypal Field</span><div class="gloss-def">The rotationally symmetric twelvefold manifold of structured identity through which all embodied spirits are individuated. Locally closed under internal operations (Axiom I). Overlaid in Document 3 with the twelve zodiacal sectors.<span class="gloss-cross">See: Local Closure, Zodiacal Overlay, Archetypal Integrity</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term"><span class="gloss-sym">T</span> Toroidal Recursion</span><div class="gloss-def">The repetition of archetypal differentiation across temporal or experiential cycles within C₁₂. Persists indefinitely absent effective axial participation (Axiom III). Treated ethically as curriculum (Prop. E3, Book II).<span class="gloss-cross">See: Spiral Mediation, Recursion Discernment</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term"><span class="gloss-sym">S</span> Spiral Mediation</span><div class="gloss-def">A continuous trajectory intersecting all archetypal sectors of C₁₂ while asymptotically increasing participation in A. Composed of local internal operations at each finite stage but achieving a trans-structural effect at its limit.<span class="gloss-cross">See: Axial Operator, Universal Traversal, Gentle Ascent</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term"><span class="gloss-sym">A</span> Axial Operator</span><div class="gloss-def">A transformation-type orthogonal to the symmetry of C₁₂, capable of recontextualizing C₁₂ into a higher-dimensional open manifold (Def. 5, Book I). Not an internal symmetry operation (Axiom IV). Corresponds to the "13th principle" — the Ophiuchan axis beyond the closed twelve-fold field.<span class="gloss-cross">See: Liberation, Dimensional Upgrade, Axial Orientation</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term"><span class="gloss-sym">E</span> Embodiment</span><div class="gloss-def">Localization of a spirit's experience within C₁₂ under recursive conditions T. The sixth operator in the generative sequence M → C₁₂ → T → S → A → E.<span class="gloss-cross">See: Grounded Spirit, Toroidal Recursion</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term">Grounded Spirit</span><div class="gloss-def">A center of experience metaphysically grounded in M and phenomenologically individuated within C₁₂ (Def. 9, Book I). Distinct from formulations asserting numerical identity with M; employs the relation <span class="gloss-sym">GroundedIn(s, M)</span> to preserve individuation while maintaining shared monadic ground.<span class="gloss-cross">See: Monad, Ground-Phenomenology Duality</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term">Local Closure</span><div class="gloss-def">The property of C₁₂ whereby all operations strictly internal to it preserve its archetypal structure (Axiom I, revised). "Local" scopes Axiom I to operations with axial coordinate zero — resolving the Self-Escape Paradox.<span class="gloss-cross">See: Trans-structural Operation, Axiom VI</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term">Liberation</span><div class="gloss-def">A global transformation in which a spirit's experiential manifold changes from locally closed confinement to a vertically extensible open structure via effective participation in A (Def. 8, Book I). Occurs iff: M remains primary, S has traversed all sectors, and trans-structural axial reorientation is achieved (Theorem I).<span class="gloss-cross">See: Conditional Transcendence, Corollary 2 (Book I)</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term">Symbolic Axiality</span><div class="gloss-def">Conceptual or imagined alignment with A that has not been grounded in completed spiral traversal. Formally <span class="gloss-sym">A_symbolic</span> vs. <span class="gloss-sym">A_effective</span>. Produces dissociation rather than liberation.<span class="gloss-cross">See: Premature Alignment Paradox, False Liberation</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term">Spiral Wholeness</span><div class="gloss-def">The meta-ideal of the complete system (Theorem E1, Book II): a way of being continually returning to C₁₂'s multiplicity while integrating it in service of axial participation. Expressed in the Book II Scholium: "centered in M, wide in C₁₂, patient in T, inclined toward A, spiral in S."<span class="gloss-cross">See: Liberated Integrator, Gentle Ascent</span></div></div>
+      <div class="gloss-entry"><span class="gloss-term">Zodiacal Overlay</span><div class="gloss-def">The interpretive layer applied to C₁₂ in Document 3, mapping each of the twelve archetypal sectors onto a zodiacal sign, sector theme, virtue, and two characteristic vices. Treated as a phenomenological instrument rather than an independent metaphysical claim
+
+</body>
+</html>
